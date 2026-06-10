@@ -1,0 +1,35 @@
+name: Feature request
+description: Propose a component or improvement that fits the design system
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user need or missing workflow should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the component, API, or behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Design-system fit
+      options:
+        - label: The proposal can remain zero-dependency and build-free.
+          required: true
+        - label: The proposal can support both dark and light themes.
+          required: true
+        - label: The proposal follows the constraints in SPEC.md.
+          required: true

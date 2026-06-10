@@ -1,0 +1,8 @@
+# Nothing's fonts are PROPRIETARY — never commit them to a public repo.
+fonts/*.otf
+fonts/*.ttf
+fonts/*.woff
+fonts/*.woff2
+.DS_Store
+.playwright-mcp/
+*.log

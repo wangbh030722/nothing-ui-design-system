@@ -1,0 +1,37 @@
+name: Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required project files
+        run: |
+          test -f index.html
+          test -f demo.html
+          test -f SPEC.md
+          test -f DESIGN.md
+          test -f css/tokens.css
+          test -f css/nothing-ui.css
+          test -f js/nothing-ui.js
+          test -f docs/preview.png
+      - name: Reject proprietary font files
+        run: |
+          if find . -type f \( -iname '*.otf' -o -iname '*.ttf' -o -iname '*.woff' -o -iname '*.woff2' \) | grep -q .; then
+            echo "Proprietary or bundled font files must not be committed."
+            exit 1
+          fi
+      - name: Reject local-only links in public pages
+        run: |
+          if grep -R -n -E 'localhost:[0-9]+|file:///Users/' README.md index.html demo.html SPEC.md; then
+            echo "Found a local-only URL in a public file."
+            exit 1
+          fi

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nothing-ui — a Nothing-inspired component library</title>
+<!-- open fallback fonts; authentic NDot/NType82 load from /fonts if you add them (see fonts/README) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@100,400;100,500;100,700;100,900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nothing-ui.css">
+</head>
+<body>
+<!-- icon symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-signal" viewBox="0 0 24 24"><path d="M3 18h2v3H3zM8 13h2v8H8zM13 9h2v12h-2zM18 5h2v16h-2z"/></symbol>
+<symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.5a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8 15.5a6 6 0 0 1 8 0"/><circle cx="12" cy="19" r="1"/></symbol>
+<symbol id="i-bt" viewBox="0 0 24 24"><path d="M7 7l10 10-5 4V3l5 4L7 17"/></symbol>
+<symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="8" width="16" height="8" rx="2"/><path d="M21 11v2"/><path d="M6 11v2"/></symbol>
+<symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v8M6.5 7a8 8 0 1 0 11 0"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9.5-9A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9.5 5c-2.5 4.5-9.5 9-9.5 9z"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.4 4 1.2 6L12 16.8 6.6 19.3l1.2-6-4.4-4 6-.7z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-chev-d" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></symbol>
+<symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-aur" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7M6 10v9h12v-9"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14a8 8 0 1 1-10-10 7 7 0 0 0 10 10z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol>
+<symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol>
+<symbol id="i-ul" viewBox="0 0 24 24"><path d="M12 20V9M7 13l5-5 5 5M5 4h14"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13h10l1-13"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M14 5l5 5L8 21H3v-5z"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8 11l8-4M8 13l8 4"/></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+</defs></svg>
+
+<div class="fab"><button id="t-dark" aria-pressed="true" onclick="setTheme('dark')">DARK</button><button id="t-light" aria-pressed="false" onclick="setTheme('light')">LIGHT</button></div>
+
+<div class="outer">
+<div class="poster">
+
+  <!-- MASTHEAD -->
+  <div class="mod s3 brand">
+    <div class="wm">NOTHING-UI</div>
+    <div class="ds">DESIGN SYSTEM</div>
+    <div class="v">v1.0</div>
+    <p>A Nothing-inspired open-source design language — dot-matrix type, monochrome surfaces, a single signal accent, frosted borderless cards on a sparse adaptive dot field.</p>
+  </div>
+
+  <!-- 01 COLOR -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">01</span><span class="t">Color System</span></div>
+    <h4 class="sub">Neutral</h4>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#000"></div><div class="n">Black</div><div class="h">#000000</div></div>
+      <div class="sw"><div class="c" style="background:#171717"></div><div class="n">Dark</div><div class="h">#171717</div></div>
+      <div class="sw"><div class="c" style="background:#2A2A2A"></div><div class="n">Grey</div><div class="h">#2A2A2A</div></div>
+      <div class="sw"><div class="c" style="background:#5A5A5A"></div><div class="n">Light</div><div class="h">#5A5A5A</div></div>
+      <div class="sw"><div class="c" style="background:#FFF"></div><div class="n">White</div><div class="h">#FFFFFF</div></div>
+    </div>
+    <h4 class="sub">Accent</h4>
+    <div class="accent-sw"><div class="c" style="background:#D71921"></div><div><div class="n" style="font-size:12px">Signal Red</div><div class="h">#D71921</div></div></div>
+  </div>
+
+  <!-- 02 TYPOGRAPHY -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">02</span><span class="t">Typography</span></div>
+    <h4 class="sub">Primary · Dot Matrix</h4>
+    <div class="specimen">Aa</div>
+    <div class="glyphset">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 !@#$%^&amp;*()_+</div>
+    <h4 class="sub">Secondary · NType82</h4>
+    <div style="font-family:var(--f-ui);font-size:32px;color:var(--display);line-height:1">Aa</div>
+    <h4 class="sub">Headline · NType82</h4>
+    <div style="font-family:var(--f-head);font-weight:600;font-size:38px;color:var(--display);line-height:1">Headline</div>
+  </div>
+
+  <!-- 03 ICONOGRAPHY -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">03</span><span class="t">Iconography</span></div>
+    <h4 class="sub">System Icons · 9×9 Dot Grid</h4>
+    <div class="icogrid" id="sysico"></div>
+    <h4 class="sub">Scalable · --gs</h4>
+    <div class="row" id="gicoscale" style="align-items:flex-end;color:var(--primary)"></div>
+    <h4 class="sub">Glyph (Dot Matrix)</h4>
+    <div class="dotglyphs">0 1 2 3 4 5 6 7 8 9</div>
+    <div class="dotglyphs">A B C D E F</div>
+    <h4 class="sub">Punctuation · Round-Dot Units</h4>
+    <div class="punct-spec">
+      <span class="ps"><span class="colon" style="--pxd:5px;color:var(--primary)"><i></i><i></i></span><span class="pl">COLON</span></span>
+      <span class="ps"><span class="pdot" style="--pxd:5px;color:var(--primary)"><i></i></span><span class="pl">DOT</span></span>
+      <span class="ps"><span class="ellip" style="--pxd:5px;color:var(--primary)"><i></i><i></i><i></i></span><span class="pl">ELLIPSIS</span></span>
+    </div>
+  </div>
+
+  <!-- 04 SPACING -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">04</span><span class="t">Spacing System</span><span class="ex">4pt</span></div>
+    <div class="spaceruler" id="ruler"></div>
+    <div class="ruler-cap" id="rulercap"></div>
+    <div class="nest"><span class="m" style="top:-8px;left:50%;transform:translateX(-50%)">16</span>
+      <div class="inner"><div class="core"><svg class="ico sm"><use href="#i-lock"/></svg></div></div>
+      <span class="m" style="bottom:-8px;left:50%;transform:translateX(-50%)">24</span>
+      <span class="m" style="left:-8px;top:50%">16</span><span class="m" style="right:-8px;top:50%">16</span>
+    </div>
+  </div>
+
+  <!-- 05 BUTTONS -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">05</span><span class="t">Buttons</span></div>
+    <h4 class="sub">Primary</h4>
+    <div class="row"><button class="btn btn-primary">Button</button><button class="btn btn-primary btn-sq"><svg class="ico sm"><use href="#i-plus"/></svg></button><button class="btn btn-primary btn-sq"><svg class="ico sm"><use href="#i-chev-r"/></svg></button></div>
+    <h4 class="sub">Outline</h4>
+    <div class="row"><button class="btn btn-outline">Button</button><button class="btn btn-outline btn-sq"><svg class="ico sm"><use href="#i-plus"/></svg></button><button class="btn btn-outline btn-sq"><svg class="ico sm"><use href="#i-chev-r"/></svg></button></div>
+    <h4 class="sub">Text · Icon</h4>
+    <div class="row"><button class="btn btn-text">Text Button →</button>
+      <button class="btn-icon"><svg class="ico sm"><use href="#i-search"/></svg></button>
+      <button class="btn-icon"><svg class="ico sm"><use href="#i-gear"/></svg></button>
+      <button class="btn-icon"><svg class="ico sm"><use href="#i-heart"/></svg></button>
+      <button class="btn-icon"><svg class="ico sm"><use href="#i-more"/></svg></button></div>
+    <h4 class="sub">States</h4>
+    <div class="row bstates"><button class="btn btn-primary">Button</button><button class="btn btn-primary hv">Hover</button><button class="btn btn-primary pr">Pressed</button><button class="btn btn-primary" disabled>Disabled</button></div>
+  </div>
+
+  <!-- 06 INPUTS -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">06</span><span class="t">Input Fields</span></div>
+    <div class="field"><span class="label">Text Input</span><input class="inp" placeholder="Input text"></div>
+    <div class="field"><span class="label">Focused</span><input class="inp focused" value="Input text"></div>
+    <div class="field"><span class="label">With Icon</span><div class="withicon"><svg class="ico sm"><use href="#i-search"/></svg><input class="inp" placeholder="Search"></div></div>
+    <h4 class="sub">Checkbox · Radio · Toggle</h4>
+    <div class="cbx"><span class="box on"><svg class="ico sm" style="width:12px;height:12px"><use href="#i-check"/></svg></span> Checked</div>
+    <div class="cbx"><span class="box"></span> Unchecked</div>
+    <div class="cbx"><span class="rdo on"></span> Option one</div>
+    <div class="cbx"><span class="rdo"></span> Option two</div>
+    <div class="row" style="margin-top:6px"><div class="switch on" onclick="this.classList.toggle('on')"></div><div class="switch" onclick="this.classList.toggle('on')"></div></div>
+  </div>
+
+  <!-- 07 CHIPS & TAGS -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">07</span><span class="t">Chips &amp; Tags</span></div>
+    <h4 class="sub">Chips</h4>
+    <div class="row"><span class="chip"><svg class="ico sm"><use href="#i-clock"/></svg>Chip</span><span class="chip on">Active</span><span class="chip"><svg class="ico sm"><use href="#i-plus"/></svg>Add</span><span class="chip">Close <svg class="ico sm"><use href="#i-x"/></svg></span></div>
+    <h4 class="sub">Tags</h4>
+    <div class="row"><span class="tag">Tag</span><span class="tag on">Active Tag</span><span class="tag dis">Disabled</span></div>
+  </div>
+
+  <!-- 08 SLIDERS -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">08</span><span class="t">Sliders</span></div>
+    <h4 class="sub">Slider</h4><input type="range" class="slider" value="65">
+    <h4 class="sub">Range</h4><div class="track-fill"><i style="left:30%;width:40%"></i><b style="left:30%"></b><b style="left:70%"></b></div>
+    <h4 class="sub">Progress · 60%</h4><div class="track-fill"><i style="width:60%"></i></div>
+    <h4 class="sub">Circular · 60%</h4>
+    <div class="circ"><svg width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="30" fill="none" stroke="var(--line-2)" stroke-width="5"/><circle cx="36" cy="36" r="30" fill="none" stroke="var(--display)" stroke-width="5" stroke-dasharray="188" stroke-dashoffset="75" transform="rotate(-90 36 36)" stroke-linecap="round"/></svg><span class="n">60%</span></div>
+  </div>
+
+  <!-- 09 NAVIGATION -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">09</span><span class="t">Navigation</span></div>
+    <h4 class="sub">Nav Bar</h4>
+    <div class="navbar"><span class="i on"><svg class="ico sm"><use href="#i-home"/></svg></span><span class="i"><svg class="ico sm"><use href="#i-grid"/></svg></span><span class="i"><svg class="ico sm"><use href="#i-plus"/></svg></span><span class="i"><svg class="ico sm"><use href="#i-user"/></svg></span></div>
+    <h4 class="sub">Tabs</h4>
+    <div class="tabs"><span class="on">Tab One</span><span>Tab Two</span><span>Tab Three</span></div>
+    <h4 class="sub">Pagination</h4>
+    <div class="pager"><a><svg class="ico sm"><use href="#i-chev-l"/></svg></a><a class="on">1</a><a>2</a><a>3</a><a><span class="ellip" style="--pxd:3px;color:var(--muted)"><i></i><i></i><i></i></span></a><a>10</a><a><svg class="ico sm"><use href="#i-chev-r"/></svg></a></div>
+  </div>
+
+  <!-- 10 ALERTS -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">10</span><span class="t">Alerts</span></div>
+    <div class="alert success"><svg class="ico sm"><use href="#i-check"/></svg><div><div class="ttl">Success</div><div class="ds">Your changes have been saved.</div></div><svg class="ico sm x"><use href="#i-x"/></svg></div>
+    <div class="alert warning"><svg class="ico sm"><use href="#i-bell"/></svg><div><div class="ttl">Warning</div><div class="ds">Please check your input.</div></div><svg class="ico sm x"><use href="#i-x"/></svg></div>
+    <div class="alert error"><svg class="ico sm"><use href="#i-x"/></svg><div><div class="ttl">Error</div><div class="ds">Something went wrong.</div></div><svg class="ico sm x"><use href="#i-x"/></svg></div>
+  </div>
+
+  <!-- 11 SWITCHES -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">11</span><span class="t">Switches</span></div>
+    <h4 class="sub">Switch</h4>
+    <div class="row"><div class="switch on" onclick="this.classList.toggle('on')"></div></div>
+    <h4 class="sub">Checkbox / Radio</h4>
+    <div class="row"><span class="box"></span><span class="box on"><svg class="ico sm" style="width:12px;height:12px"><use href="#i-check"/></svg></span><span class="rdo"></span><span class="rdo on"></span></div>
+  </div>
+
+  <!-- 12 AVATAR & BADGE -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">12</span><span class="t">Avatar &amp; Badge</span></div>
+    <div class="row">
+      <div class="ava bdot"><svg class="ico"><use href="#i-user"/></svg></div>
+      <div class="ava ring"><svg class="ico"><use href="#i-user"/></svg></div>
+      <div class="ava">N</div>
+      <div class="ava add"><svg class="ico"><use href="#i-plus"/></svg></div>
+    </div>
+  </div>
+
+  <!-- 13 CARDS -->
+  <div class="mod s6">
+    <div class="mhead"><span class="no">13</span><span class="t">Cards</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:stretch">
+      <div class="card" style="flex:1"><div class="thumb"></div><div class="ttl">Card Title</div><div class="ds">Description of the card content.</div></div>
+      <div class="card" style="flex:1"><span class="label">Battery</span><div class="statbig">78<span style="font-size:14px">%</span></div><div class="segbar" id="card-seg" style="margin:8px 0"></div><div class="ds">128 / 256 GB</div></div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column;justify-content:space-between"><div><div class="ttl">Glyph interface</div><div class="ds">Minimal &amp; intuitive by design.</div></div><svg class="ico" style="color:var(--accent-text);align-self:flex-end"><use href="#i-aur"/></svg></div>
+    </div>
+  </div>
+
+  <!-- 14 LISTS -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">14</span><span class="t">Lists</span></div>
+    <div class="list">
+      <div class="li"><div class="tx"><div class="h">List Item</div><div class="s">Subtitle</div></div><svg class="ico sm"><use href="#i-chev-r"/></svg></div>
+      <div class="li"><div class="tx"><div class="h">List Item</div><div class="s">Subtitle</div></div><svg class="ico sm"><use href="#i-chev-r"/></svg></div>
+      <div class="li"><div class="tx"><div class="h">List Item</div><div class="s">Subtitle</div></div><svg class="ico sm"><use href="#i-chev-r"/></svg></div>
+    </div>
+  </div>
+
+  <!-- 15 TABLE -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">15</span><span class="t">Table</span></div>
+    <table><thead><tr><th>Name</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
+      <tr><td>Item One</td><td>2024-05-20</td><td><span class="pill a">Active</span></td><td><svg class="ico sm"><use href="#i-more"/></svg></td></tr>
+      <tr><td>Item Two</td><td>2024-05-19</td><td><span class="pill i">Inactive</span></td><td><svg class="ico sm"><use href="#i-more"/></svg></td></tr>
+      <tr><td>Item Three</td><td>2024-05-18</td><td><span class="pill a">Active</span></td><td><svg class="ico sm"><use href="#i-more"/></svg></td></tr>
+    </tbody></table>
+  </div>
+
+  <!-- 16 CALENDAR -->
+  <div class="mod s4 cal">
+    <div class="mhead"><span class="no">16</span><span class="t">Calendar</span></div>
+    <div class="ch"><svg class="ico sm"><use href="#i-chev-l"/></svg><span class="m">May 2024</span><svg class="ico sm"><use href="#i-chev-r"/></svg></div>
+    <div class="grid" id="cal"></div>
+  </div>
+
+  <!-- 17 TOOLTIP -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">17</span><span class="t">Tooltip</span></div>
+    <div class="tipwrap"><div class="tip">Tooltip text</div><span class="hovme">Hover me</span></div>
+  </div>
+
+  <!-- 18 MODAL -->
+  <div class="mod s6">
+    <div class="mhead"><span class="no">18</span><span class="t">Modal / Dialog</span></div>
+    <div class="modal">
+      <div class="mh"><span class="t">Dialog Title</span><svg class="ico sm"><use href="#i-x"/></svg></div>
+      <div class="mb">This is a dialog message for user confirmation.</div>
+      <div class="mf"><button class="btn btn-text">Cancel</button><button class="btn btn-primary">Confirm</button></div>
+    </div>
+  </div>
+
+  <!-- 19 PROGRESS & STEPPER -->
+  <div class="mod s6">
+    <div class="mhead"><span class="no">19</span><span class="t">Progress &amp; Stepper</span></div>
+    <h4 class="sub">Linear · 60%</h4><div class="lp"><i></i></div>
+    <h4 class="sub">Stepper</h4>
+    <div class="stepper"><span class="st on">1</span><span class="ln"></span><span class="st on">2</span><span class="ln"></span><span class="st">3</span><span class="ln"></span><span class="st">4</span></div>
+  </div>
+
+  <!-- BACKGROUND — dedicated explainer section -->
+  <div class="mod s12">
+    <div class="mhead"><span class="no">20</span><span class="t">Background · Dot Field</span><span class="ex">layers · rules · demo</span></div>
+    <div class="bg-cols">
+      <div class="bg-principles">
+        <p class="bg-lead">The dot field is a sparse layer of fine dots that takes the <strong>local inverse of whatever surface sits beneath it</strong> — light over dark objects, dark over light ones. One continuous field crossing both reads correctly on each. Cards are the topmost layer and <strong>cover the dots</strong>; dots show only in the gaps between cards. Implementation: a fixed dot layer with <span class="mono">mix-blend-mode:difference</span>.</p>
+        <ul class="bg-rules">
+          <li>Local inverse — dots = <strong>inverse of the surface behind them</strong> (not one per-theme color); dark surface → light dots, light surface → dark dots</li>
+          <li>Layers — background / dots / <strong>card (topmost, covers dots)</strong></li>
+          <li>Fine &amp; sparse — ~1.3px dots, ~120px spacing; visible on inspection, never competing</li>
+          <li>Implementation — <span class="mono">mix-blend-mode:difference</span> auto-inverts; no per-theme dot color needed</li>
+          <li>Continuous alignment — viewport-anchored (<span class="mono">background-attachment:fixed</span>)</li>
+        </ul>
+      </div>
+      <div class="layer-demo" role="img" aria-label="Local-inverse demo: one dot field reads light over the dark block, dark over the light block; the card covers the dots">
+        <div class="surf dark"><span class="lyl">Dark surface · light dots</span></div>
+        <div class="surf light"><span class="lyl">Light surface · dark dots</span></div>
+        <div class="dotfield"></div>
+        <div class="democard"><span class="lyl">Card · covers dots</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 21 ICON LIBRARY -->
+  <div class="mod s12">
+    <div class="mhead"><span class="no">21</span><span class="t">Icon Library · Round-Dot Pixels</span></div>
+    <div class="icogrid lib" id="iconlib"></div>
+  </div>
+
+  <!-- 22 DROPDOWN -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">22</span><span class="t">Dropdown · Menu</span></div>
+    <div class="menu">
+      <div class="grp">Account</div>
+      <div class="mi">Profile<span class="k">⌘P</span></div>
+      <div class="mi">Settings<span class="k">⌘,</span></div>
+      <div class="sep"></div>
+      <div class="mi">Switch workspace<span class="k">⌘K</span></div>
+      <div class="mi danger">Sign out</div>
+    </div>
+  </div>
+
+  <!-- 23 ACCORDION -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">23</span><span class="t">Accordion</span></div>
+    <div class="acc">
+      <div class="it open"><div class="hd" onclick="this.parentNode.classList.toggle('open')">What is nothing-ui?<span class="sign">+</span></div><div class="bd"><p>A zero-dependency, Nothing-inspired component library — pure CSS variables and a little vanilla JS.</p></div></div>
+      <div class="it"><div class="hd" onclick="this.parentNode.classList.toggle('open')">Does it need a build step?<span class="sign">+</span></div><div class="bd"><p>No. Drop in the stylesheet and write HTML.</p></div></div>
+      <div class="it"><div class="hd" onclick="this.parentNode.classList.toggle('open')">Can I re-skin it?<span class="sign">+</span></div><div class="bd"><p>Edit tokens.css — every component reads from the same variables.</p></div></div>
+    </div>
+  </div>
+
+  <!-- 24 BREADCRUMB -->
+  <div class="mod s5">
+    <div class="mhead"><span class="no">24</span><span class="t">Breadcrumb</span></div>
+    <nav class="crumb"><a href="#">Home</a><span class="sl">/</span><a href="#">Components</a><span class="sl">/</span><a href="#">Navigation</a><span class="sl">/</span><span class="cur">Breadcrumb</span></nav>
+    <div class="divl" style="margin-top:22px">Section</div>
+  </div>
+
+  <!-- 25 AVATAR GROUP -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">25</span><span class="t">Avatar Group</span></div>
+    <div class="avg"><div class="ava">A</div><div class="ava">B</div><div class="ava">C</div><div class="ava more">+5</div></div>
+    <div class="label" style="margin-top:14px">8 collaborators</div>
+  </div>
+
+  <!-- 26 SKELETON -->
+  <div class="mod s3">
+    <div class="mhead"><span class="no">26</span><span class="t">Skeleton</span></div>
+    <div class="row" style="align-items:flex-start;gap:12px">
+      <div class="skel circ"></div>
+      <div style="flex:1"><div class="skel ln"></div><div class="skel ln w60"></div><div class="skel ln w40"></div></div>
+    </div>
+  </div>
+
+  <!-- 27 COMMAND PALETTE -->
+  <div class="mod s6">
+    <div class="mhead"><span class="no">27</span><span class="t">Command Palette</span></div>
+    <div class="cmd">
+      <div class="top"><svg class="ico sm" style="color:var(--muted)"><use href="#i-bell"/></svg><input value="refactor" readonly><span class="esc">ESC</span></div>
+      <div class="grp">Actions</div>
+      <div class="ci on">Refactor selection<span class="k">⌘⇧R</span></div>
+      <div class="ci">Run agent<span class="k">⌘R</span></div>
+      <div class="grp">Recent</div>
+      <div class="ci">auth-module.ts<span class="k">↵</span></div>
+    </div>
+  </div>
+
+  <!-- 28 KBD + CODE -->
+  <div class="mod s6">
+    <div class="mhead"><span class="no">28</span><span class="t">Kbd &amp; Code</span></div>
+    <div class="row" style="margin-bottom:16px"><span class="kbd">⌘</span><span class="kbd">⇧</span><span class="kbd">K</span><span class="muted" style="margin-left:6px">open palette</span></div>
+    <pre class="code"><span class="cm">// run an agent</span>
+<span class="kw">const</span> r = <span class="kw">await</span> agent(<span class="st">"refactor"</span>)</pre>
+  </div>
+
+  <!-- 29 TOAST -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">29</span><span class="t">Toast</span></div>
+    <div class="toasts">
+      <div class="toast ok"><svg class="ico sm"><use href="#i-check"/></svg><div class="tx">Saved<s>changes synced</s></div><svg class="ico sm x"><use href="#i-x"/></svg></div>
+      <div class="toast"><svg class="ico sm"><use href="#i-bell"/></svg><div class="tx">Agent finished<s>2 files changed</s></div><svg class="ico sm x"><use href="#i-x"/></svg></div>
+    </div>
+  </div>
+
+  <!-- 30 SEGMENTED + GROUP -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">30</span><span class="t">Segmented · Group</span></div>
+    <h4 class="sub">Segmented control</h4>
+    <div class="seg"><button class="on">Day</button><button>Week</button><button>Month</button></div>
+    <h4 class="sub">Button group</h4>
+    <div class="bgroup"><button class="btn on">B</button><button class="btn">I</button><button class="btn">U</button></div>
+  </div>
+
+  <!-- 31 EMPTY STATE -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">31</span><span class="t">Empty State</span></div>
+    <div class="empty">
+      <div class="gico" data-dot="folder"></div>
+      <div class="h">No agents yet</div><div class="s">Create one to get started.</div>
+      <button class="btn btn-primary">New agent</button>
+    </div>
+  </div>
+
+  <!-- 32 TIMELINE -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">32</span><span class="t">Timeline</span></div>
+    <ul class="tline">
+      <li class="on"><div class="h">Task started</div><div class="t">21:30</div></li>
+      <li class="on"><div class="h">Files analyzed</div><div class="t">21:32</div></li>
+      <li><div class="h">Awaiting review</div><div class="t">—</div></li>
+    </ul>
+  </div>
+
+  <!-- 33 POPOVER -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">33</span><span class="t">Popover</span></div>
+    <div class="pop" style="margin-top:6px"><div class="h">Auto-approve</div><div class="b">Trusted agents run without asking for confirmation each step.</div></div>
+  </div>
+
+  <!-- 34 RATING + STEPPER -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">34</span><span class="t">Rating · Stepper</span></div>
+    <h4 class="sub">Rating</h4>
+    <div class="rate"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+    <h4 class="sub">Quantity</h4>
+    <div class="nstep"><button>−</button><span class="v">3</span><button>+</button></div>
+  </div>
+
+  <!-- 35 DROPZONE -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">35</span><span class="t">Dropzone</span></div>
+    <div class="drop"><div class="gico" data-dot="up"></div><div><b>Drop files</b> or click to browse</div></div>
+  </div>
+
+  <!-- 36 BANNER -->
+  <div class="mod s8">
+    <div class="mhead"><span class="no">36</span><span class="t">Banner</span></div>
+    <div class="banner" style="margin-bottom:10px"><span class="tx">New version v1.1 available</span><span class="b2">Update</span></div>
+    <div class="banner sig"><span class="tx">1 agent needs your decision</span><span class="b2">Review</span></div>
+  </div>
+
+  <!-- 37 METRICS -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">37</span><span class="t">Metric</span></div>
+    <div class="row" style="gap:10px">
+      <div class="metric" style="flex:1"><div class="label">Tokens</div><div class="v">128<span style="font-size:14px;color:var(--secondary)">K</span></div><div class="d up">↑ 12%</div></div>
+      <div class="metric" style="flex:1"><div class="label">Errors</div><div class="v">3</div><div class="d dn">↓ 40%</div></div>
+    </div>
+  </div>
+
+  <!-- 38 TABS PILL -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">38</span><span class="t">Tabs · Pill</span></div>
+    <div class="tabpills"><span class="on">Overview</span><span>Logs</span><span>Files</span></div>
+  </div>
+
+  <!-- 39 TREE -->
+  <div class="mod s4">
+    <div class="mhead"><span class="no">39</span><span class="t">Tree View</span></div>
+    <div class="tree">
+      <div class="n"><svg class="ico sm"><use href="#i-aur"/></svg>src</div>
+      <div class="ch">
+        <div class="n sel"><svg class="ico sm"><use href="#i-aur"/></svg>index.ts</div>
+        <div class="n"><svg class="ico sm"><use href="#i-aur"/></svg>auth.ts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 40 GLYPH MATRIX -->
+  <div class="mod s12">
+    <div class="mhead"><span class="no">40</span><span class="t">Glyph Matrix · 25×25 Circular Mask</span><span class="ex">canonical dot grid · white LEDs on black</span></div>
+    <p class="bg-lead" style="margin-bottom:18px">Matches the Phone (3) <strong>Glyph Matrix</strong>: a 25×25 addressable grid, circularly masked (no LEDs in the corners), built from white round dots. Dim LEDs form the base texture, lit dots form the glyph; signal glyphs use brand red. This is the <strong>canonical grid</strong> for dot iconography — higher fidelity than the in-page 9×9 status icons.</p>
+    <div class="gmx-wrap" id="gmx"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- APPLIED -->
+<div class="appwrap"><div class="outer">
+  <div class="applead"><span class="no">▲</span><h2>Applied · Agent Console</h2></div>
+  <div class="app">
+    <div class="titlebar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="nm">AGENT CONSOLE</span></div>
+    <div class="bento">
+      <div class="tile hero-tile">
+        <span class="label">SESSION UPTIME</span>
+        <div class="clock"><span class="livedot"></span>04<span class="colon" style="--pxd:8px"><i></i><i></i></span>17</div>
+        <div class="fui" style="font-size:18px;margin-top:16px">5 / 12 agents running</div>
+        <div class="label" style="margin-top:4px">SAT · 06 JUN 2026 · 21:34</div>
+        <div class="dotrow" id="agentdots"></div>
+        <div class="grow"></div>
+        <div class="hr"></div>
+        <div class="foot2"><div><span class="label">TOKENS / TODAY</span><div class="big">128<span class="u">K</span></div></div>
+        <div style="text-align:right"><span class="label">NEEDS DECISION</span><div class="big" style="color:var(--accent-text)">1</div></div></div>
+      </div>
+      <div class="tile" style="display:flex;flex-direction:column;align-items:center"><span class="label" style="align-self:flex-start">CPU LOAD</span>
+        <div class="gauge"><svg width="130" height="130" viewBox="0 0 96 96"><circle cx="48" cy="48" r="44" fill="none" stroke="var(--line-2)" stroke-width="3" stroke-dasharray="1.2 12.3"/><circle cx="48" cy="48" r="38" fill="none" stroke="var(--line)" stroke-width="3"/><circle cx="48" cy="48" r="38" fill="none" stroke="var(--display)" stroke-width="3" stroke-dasharray="239" stroke-dashoffset="65" transform="rotate(-90 48 48)"/></svg><div class="num"><b>73<span class="pct">%</span></b></div></div>
+      </div>
+      <div class="tile"><span class="label">MEMORY</span><div class="big" style="margin-top:12px">12.4<span class="u">GB</span></div><div class="label" style="margin-top:6px">/ 16 GB USED</div><div class="segbar" id="seg-mem" style="margin-top:14px"></div></div>
+      <div class="tile run" style="grid-column:2/span 2"><span class="label">NOW RUNNING</span>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end"><div><div class="title">claude-code</div><div class="label" style="margin-top:5px">REFACTOR · AUTH MODULE</div></div><div class="spark" id="spark"></div></div>
+        <div class="trk"></div><div style="display:flex;justify-content:space-between;margin-top:8px"><span class="faint">02:34</span><span class="muted">~04:47</span></div>
+      </div>
+      <div class="tile"><span class="label">QUICK SETTINGS</span><div style="margin-top:8px">
+        <div class="qrow"><span class="l">Auto-approve</span><span class="meta label">TRUSTED</span><div class="switch on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="qrow"><span class="l">Sound alerts</span><span class="meta label">ZELDA</span><div class="switch on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="qrow"><span class="l">Do not disturb</span><span class="meta label">OFF</span><div class="switch" onclick="this.classList.toggle('on')"></div></div></div>
+      </div>
+      <div class="tile"><span class="label">AGENTS · 12 TOTAL</span><div style="margin-top:16px">
+        <div class="srow"><div class="seg-head"><span class="label">RUNNING</span><span class="v">5</span></div><div class="segbar short" id="ag-run"></div></div>
+        <div class="srow"><div class="seg-head"><span class="label">IDLE</span><span class="v">6</span></div><div class="segbar short" id="ag-idle"></div></div>
+        <div class="srow"><div class="seg-head"><span class="label" style="color:var(--accent-text)">NEEDS INPUT</span><span class="v" style="color:var(--accent-text)">1</span></div><div class="segbar short" id="ag-need"></div></div></div>
+      </div>
+      <div class="tile"><span class="label">STATUS</span>
+        <div class="chips"><span class="chip" style="border-color:var(--success);color:var(--success)">● CONNECTED</span><span class="chip on">↑ 1 UPDATE</span></div>
+        <div class="big">87<span class="u" style="font-family:var(--f-display);font-size:16px">%</span></div><div class="segbar" id="seg-bat" style="margin-top:12px"></div><div class="label" style="margin-top:10px">~ 4H 23M REMAINING</div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<footer><span>NOTHING-UI · ZERO-DEPENDENCY COMPONENT LIBRARY · MIT</span><span>NDOT · NTYPE82 · HELVETICA · GEIST MONO · #D71921</span></footer>
+<script src="js/nothing-ui.js"></script>
+</body>
+</html>

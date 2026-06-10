@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nothing-ui · interactive demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@100,400;100,500;100,700;100,900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nothing-ui.css">
+<style>
+/* ===== demo chrome ===== */
+html,body{height:100%}
+body{overflow:hidden}
+main{height:100vh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+section.stage{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;cursor:grab}
+section.stage:active{cursor:grabbing}
+.demo-brand{position:fixed;top:16px;left:20px;z-index:60;display:flex;align-items:baseline;gap:10px;mix-blend-mode:difference;color:#fff;pointer-events:none}
+.demo-brand .w{font-family:var(--f-display);font-weight:500;font-size:15px;letter-spacing:.06em}
+.demo-brand .s{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em}
+.stage-step{position:fixed;top:16px;right:20px;z-index:60;mix-blend-mode:difference;color:#fff;font-family:var(--f-display);font-weight:500;font-size:12px;letter-spacing:.1em;pointer-events:none}
+.hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:40;mix-blend-mode:difference;color:#fff;font-family:var(--f-mono);font-size:9px;letter-spacing:.18em;pointer-events:none;animation:hintpulse 2.6s ease-in-out infinite}
+@keyframes hintpulse{0%,100%{opacity:.85}50%{opacity:.3}}
+.scrollhint{position:absolute;bottom:22px;right:24px;z-index:40;mix-blend-mode:difference;color:#fff;font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;pointer-events:none}
+
+/* ===== comparison machinery ===== */
+.cmp-layer{position:absolute;inset:0}
+.cmp-layer.b{clip-path:inset(0 0 0 var(--cut,50%))}
+.divider{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:0;z-index:30;pointer-events:none}
+.divider::before{content:"";position:absolute;top:0;bottom:0;left:-.5px;width:1px;background:#fff;mix-blend-mode:difference}
+.divider .knob{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;
+  background:#fff;mix-blend-mode:difference;display:grid;place-items:center;font-family:var(--f-mono);font-size:11px;color:#000;letter-spacing:.05em}
+.corner{position:absolute;top:54px;font-family:var(--f-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:6px 12px;border-radius:999px;z-index:20}
+.corner.l{left:20px}.corner.r{right:20px}
+
+/* ===== nothing dashboard panel ===== */
+.dwrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);transition:none}
+.dpanel{position:relative;isolation:isolate;width:min(1240px,94vw);margin-top:48px}
+.dotlayer{position:absolute;inset:-40vh -10vw;z-index:-1;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.42) 1.3px,transparent 1.7px);
+  background-size:120px 120px;background-attachment:fixed;mix-blend-mode:difference}
+.dchrome{height:40px;display:flex;align-items:center;gap:7px;padding:0 14px;border-bottom:1px solid var(--line)}
+.dchrome .nm{margin-left:8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dchrome .dlive{margin-left:auto;display:flex;align-items:center;gap:8px}
+.dchrome .dlive .livedot{width:8px;height:8px;margin:0}
+.dpanel .bento{grid-template-rows:auto auto auto}
+.dpanel .tile{padding:18px}
+.dpanel .clock{font-size:clamp(40px,5.6vw,70px);margin-top:8px}
+.dpanel .clock .colon{animation:ckblink 1s steps(1) infinite}
+@keyframes ckblink{0%,100%{opacity:1}50%{opacity:.25}}
+.dpanel .tile .big{font-size:32px}
+.dpanel .gauge{width:108px;height:108px;margin:8px auto 0}
+.dpanel .gauge svg{width:108px;height:108px}
+.dpanel .gauge .num{font-size:28px}
+.trk.scan{position:relative;overflow:hidden}
+.trk.scan::after{animation:scan 3.2s var(--ease) infinite}
+@keyframes scan{0%{width:6%}55%{width:84%}100%{width:6%}}
+.logfeed{margin-top:10px;display:flex;flex-direction:column;gap:7px;height:108px;overflow:hidden}
+.logfeed .ll{font-family:var(--f-mono);font-size:9.5px;color:var(--secondary);display:flex;gap:8px;animation:llin .3s var(--ease)}
+.logfeed .ll .lt{color:var(--muted)}
+.logfeed .ll.sig{color:var(--accent-text)}
+@keyframes llin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.okchip{border-color:var(--success)!important;color:var(--success)!important}
+.okchip i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--success);margin-right:2px;animation:hintpulse 1.8s ease-in-out infinite}
+.corner.ntag{background:var(--display);color:var(--bg)}
+
+/* ===== deliberately-generic "AI slop" side (off-spec on purpose) ===== */
+.slop{position:absolute;inset:0;background:linear-gradient(160deg,#eef2ff 0%,#faf5ff 55%,#fdf2f8 100%);
+  font-family:system-ui,'Segoe UI',Roboto,sans-serif;color:#1e293b;display:flex;align-items:center;justify-content:center}
+.slop *{box-sizing:border-box}
+.slop .swrap{width:min(1240px,94vw)}
+.slop h1{font-size:clamp(22px,2.6vw,34px);font-weight:800;margin-bottom:4px;
+  background:linear-gradient(90deg,#6366f1,#a855f7,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:gradslide 4s linear infinite;background-size:200% 100%}
+@keyframes gradslide{to{background-position:200% 0}}
+.slop .sub{color:#64748b;font-size:13px;margin-bottom:18px}
+.slop .sgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:14px}
+.slop .scard{background:#fff;border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(99,102,241,.16)}
+.slop .scard.heroish{grid-row:1/span 2;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 16px 40px rgba(139,92,246,.4)}
+.slop .slabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#94a3b8;margin-bottom:8px}
+.slop .heroish .slabel{color:rgba(255,255,255,.7)}
+.slop .bignum{font-size:44px;font-weight:800;line-height:1}
+.slop .pillrow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.slop .spill{font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px}
+.slop .spill.g{background:#dcfce7;color:#15803d}.slop .spill.y{background:#fef9c3;color:#a16207}.slop .spill.r{background:#fee2e2;color:#b91c1c}
+.slop .donut{width:108px;height:108px;border-radius:50%;margin:10px auto;position:relative;
+  background:conic-gradient(#6366f1 0 73%,#e2e8f0 73% 100%)}
+.slop .donut::after{content:"73%";position:absolute;inset:14px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:20px;color:#6366f1}
+.slop .sbar{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin-top:12px}
+.slop .sbar i{display:block;height:100%;width:72%;border-radius:999px;background:linear-gradient(90deg,#34d399,#10b981);animation:sbarpulse 2s ease-in-out infinite}
+@keyframes sbarpulse{0%,100%{width:64%}50%{width:78%}}
+.slop .cta{margin-top:16px;display:inline-block;padding:11px 22px;border-radius:14px;font-weight:700;font-size:13px;color:#fff;
+  background:linear-gradient(90deg,#6366f1,#d946ef);box-shadow:0 8px 24px rgba(217,70,239,.45);animation:ctabounce 2.2s ease-in-out infinite}
+@keyframes ctabounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.slop .feed{margin-top:6px;display:flex;flex-direction:column;gap:9px;font-size:12.5px;color:#475569}
+.slop .feed .emj{margin-right:6px}
+.slop .robot{font-size:40px;animation:ctabounce 1.8s ease-in-out infinite;display:inline-block}
+.slop .corner.stag{background:linear-gradient(90deg,#6366f1,#a855f7);color:#fff;box-shadow:0 6px 18px rgba(139,92,246,.4);font-family:system-ui,sans-serif;font-weight:700;letter-spacing:.04em}
+@media(max-width:860px){.slop .sgrid{grid-template-columns:1fr 1fr}.dpanel .bento{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="d-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div class="demo-brand"><span class="w">NOTHING-UI</span><span class="s">INTERACTIVE DEMO</span></div>
+<div class="stage-step" id="step">01 / 02</div>
+
+<!-- dashboard template — cloned into every comparison layer -->
+<template id="tpl-dash">
+<div class="dwrap"><div class="dpanel">
+  <div class="dotlayer"></div>
+  <div class="dchrome"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="nm">AGENT CONSOLE</span>
+    <span class="dlive"><i class="livedot"></i><span class="label">LIVE</span></span></div>
+  <div class="bento">
+    <div class="tile hero-tile">
+      <span class="label">SESSION UPTIME</span>
+      <div class="clock"><span class="ck-h">00</span><span class="colon" style="--pxd:7px"><i></i><i></i></span><span class="ck-m">00</span></div>
+      <div class="fui" style="font-size:16px;margin-top:12px"><span class="runcount">5</span> / 12 agents running</div>
+      <div class="dotrow agentdots"></div>
+      <div class="grow"></div><div class="hr"></div>
+      <div class="foot2">
+        <div><span class="label">TOKENS / TODAY</span><div class="big tokval">128<span class="u">K</span></div></div>
+        <div style="text-align:right"><span class="label" style="color:var(--accent-text)">NEEDS DECISION</span><div class="big" style="color:var(--accent-text)">1</div></div>
+      </div>
+    </div>
+    <div class="tile" style="display:flex;flex-direction:column;align-items:center">
+      <span class="label" style="align-self:flex-start">CPU LOAD</span>
+      <div class="gauge"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="44" fill="none" stroke="var(--line-2)" stroke-width="3" stroke-dasharray="1.2 12.3"/><circle cx="48" cy="48" r="38" fill="none" stroke="var(--line)" stroke-width="3"/><circle class="garc" cx="48" cy="48" r="38" fill="none" stroke="var(--display)" stroke-width="3" stroke-dasharray="239" stroke-dashoffset="65" transform="rotate(-90 48 48)"/></svg>
+      <div class="num"><b><span class="gval">73</span><span class="pct">%</span></b></div></div>
+    </div>
+    <div class="tile"><span class="label">MEMORY</span><div class="big" style="margin-top:10px">12.4<span class="u">GB</span></div><div class="segbar short memseg" style="margin-top:12px"></div><div class="label" style="margin-top:8px">/ 16 GB USED</div></div>
+    <div class="tile run" style="grid-column:2/span 2"><span class="label">NOW RUNNING</span>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end"><div><div class="title">claude-code</div><div class="label" style="margin-top:5px">REFACTOR · AUTH MODULE</div></div><div class="spark sparkle"></div></div>
+      <div class="trk scan"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px"><span class="faint eltime">02:34</span><span class="muted">~04:47</span></div>
+    </div>
+    <div class="tile"><span class="label">EVENT LOG</span><div class="logfeed"></div></div>
+    <div class="tile"><span class="label">AGENTS · 12 TOTAL</span><div style="margin-top:12px">
+      <div class="srow"><div class="seg-head"><span class="label">RUNNING</span><span class="v">5</span></div><div class="segbar short ag-run"></div></div>
+      <div class="srow"><div class="seg-head"><span class="label">IDLE</span><span class="v">6</span></div><div class="segbar short ag-idle"></div></div>
+      <div class="srow"><div class="seg-head"><span class="label" style="color:var(--accent-text)">NEEDS INPUT</span><span class="v" style="color:var(--accent-text)">1</span></div><div class="segbar short ag-need"></div></div></div>
+    </div>
+    <div class="tile"><span class="label">STATUS</span>
+      <div class="chips"><span class="chip okchip"><i></i>CONNECTED</span></div>
+      <div class="big">87<span class="u" style="font-family:var(--f-display);font-size:15px">%</span></div>
+      <div class="segbar short batseg" style="margin-top:10px"></div>
+      <div class="label" style="margin-top:8px">~ 4H 23M REMAINING</div>
+    </div>
+  </div>
+</div></div>
+</template>
+
+<main id="main">
+
+<!-- ════ STAGE 1 · generic AI output vs nothing-ui ════ -->
+<section class="stage" id="s1" style="--cut:50%">
+  <!-- layer A · deliberately generic -->
+  <div class="cmp-layer a">
+    <div class="slop">
+      <span class="corner l stag spill">✨ Generic AI output</span>
+      <div class="swrap">
+        <h1>🤖 AI Agent Dashboard</h1>
+        <div class="sub">Monitor your AI agents in real-time! ✨ All systems operational 🚀</div>
+        <div class="sgrid">
+          <div class="scard heroish">
+            <div class="slabel">Session Uptime</div>
+            <div class="bignum">04:17</div>
+            <div style="margin-top:10px;font-size:14px;opacity:.9">5 / 12 agents running <span class="robot">🤖</span></div>
+            <div class="pillrow"><span class="spill g">✅ 5 Running</span><span class="spill y">😴 6 Idle</span><span class="spill r">⚠️ 1 Blocked</span></div>
+            <a class="cta">Upgrade to Pro 🚀</a>
+          </div>
+          <div class="scard"><div class="slabel">CPU Usage 💻</div><div class="donut"></div></div>
+          <div class="scard"><div class="slabel">Memory 🧠</div><div class="bignum" style="color:#10b981;font-size:34px">12.4GB</div><div class="sbar"><i></i></div><div style="font-size:11px;color:#94a3b8;margin-top:8px">of 16GB used</div></div>
+          <div class="scard" style="grid-column:2/span 2"><div class="slabel">Recent Activity 📋</div>
+            <div class="feed">
+              <div><span class="emj">🎉</span>Agent claude-code finished refactoring!</div>
+              <div><span class="emj">✅</span>38 tests passed successfully</div>
+              <div><span class="emj">⚡</span>Deploy preview is ready to view</div>
+              <div><span class="emj">⚠️</span>Agent-07 is waiting for your approval...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- layer B · nothing-ui (light mode) -->
+  <div class="cmp-layer b" data-theme="light">
+    <div class="mount-dash"></div>
+    <span class="corner r ntag">nothing-ui</span>
+  </div>
+  <div class="divider"><span class="knob">◂▸</span></div>
+  <div class="hint">DRAG TO COMPARE</div>
+  <div class="scrollhint">SCROLL ▾</div>
+</section>
+
+<!-- ════ STAGE 2 · dark / light ════ -->
+<section class="stage" id="s2" style="--cut:50%">
+  <div class="cmp-layer a">
+    <div class="mount-dash"></div>
+    <span class="corner l ntag">DARK</span>
+  </div>
+  <div class="cmp-layer b" data-theme="light">
+    <div class="mount-dash"></div>
+    <span class="corner r" style="background:#000;color:#fff">LIGHT</span>
+  </div>
+  <div class="divider"><span class="knob">◂▸</span></div>
+  <div class="hint">DRAG · DARK ⟷ LIGHT</div>
+</section>
+
+</main>
+
+<script>
+/* mount dashboard clones */
+const tpl=document.getElementById('tpl-dash');
+document.querySelectorAll('.mount-dash').forEach(m=>m.appendChild(tpl.content.cloneNode(true)));
+
+/* fill repeated structures in every clone */
+function eachDash(sel,fn){document.querySelectorAll(sel).forEach(fn);}
+eachDash('.agentdots',el=>{const cls=['run','run','run','run','run','','','','','','','need'];
+  cls.forEach(c=>{const i=document.createElement('i');if(c)i.className=c;el.appendChild(i);});});
+function seg(el,total,filled,color){el.innerHTML='';for(let i=0;i<total;i++){const s=document.createElement('i');s.style.background=i<filled?color:'var(--line)';el.appendChild(s);}}
+eachDash('.memseg',el=>seg(el,22,17,'var(--display)'));
+eachDash('.ag-run',el=>seg(el,12,5,'var(--display)'));
+eachDash('.ag-idle',el=>seg(el,12,6,'var(--secondary)'));
+eachDash('.ag-need',el=>seg(el,12,1,'var(--accent)'));
+eachDash('.batseg',el=>seg(el,20,17,'var(--display)'));
+eachDash('.sparkle',el=>{for(let i=0;i<13;i++){const b=document.createElement('i');b.style.height=(14+Math.round(Math.sin(i*1.7)*10+10))+'px';el.appendChild(b);}});
+
+/* ===== live dynamics (all clones update in lock-step) ===== */
+const pad=n=>String(n).padStart(2,'0');
+function tickClock(){const d=new Date();
+  document.querySelectorAll('.ck-h').forEach(e=>e.textContent=pad(d.getHours()));
+  document.querySelectorAll('.ck-m').forEach(e=>e.textContent=pad(d.getMinutes()));}
+tickClock();setInterval(tickClock,1000);
+
+let el=154; /* elapsed seconds for NOW RUNNING */
+setInterval(()=>{el++;const t=pad(Math.floor(el/60))+':'+pad(el%60);
+  document.querySelectorAll('.eltime').forEach(e=>e.textContent=t);},1000);
+
+let tok=128.0;
+setInterval(()=>{tok+=Math.random()*0.4;
+  document.querySelectorAll('.tokval').forEach(e=>e.innerHTML=tok.toFixed(0)+'<span class="u">K</span>');},2000);
+
+/* gauge breathes 60–86% */
+let gT=0;
+setInterval(()=>{gT+=.16;const v=Math.round(73+Math.sin(gT)*12);
+  document.querySelectorAll('.gval').forEach(e=>e.textContent=v);
+  document.querySelectorAll('.garc').forEach(c=>c.style.strokeDashoffset=(239*(1-v/100)).toFixed(1));},900);
+
+/* sparkline shifts */
+setInterval(()=>{document.querySelectorAll('.sparkle').forEach(sp=>{
+  const b=sp.firstElementChild;sp.removeChild(b);
+  b.style.height=(10+Math.round(Math.random()*26))+'px';
+  b.style.background=parseInt(b.style.height)>28?'var(--display)':'var(--muted)';
+  sp.appendChild(b);});},620);
+
+/* memory segbar drifts 14–20 cells */
+let mT=0;
+setInterval(()=>{mT+=.5;const f=17+Math.round(Math.sin(mT)*3);
+  document.querySelectorAll('.memseg').forEach(e=>seg(e,22,f,'var(--display)'));},1400);
+
+/* event log feed */
+const LOG=[
+ ['agent-03 · diff applied · [SAVED]',0],
+ ['build · 38 tests passed',0],
+ ['agent-11 · context 72% · compacting',0],
+ ['agent-07 · awaiting approval · [NEEDS INPUT]',1],
+ ['deploy preview ready',0],
+ ['agent-05 · tokens 12.4K · ok',0],
+ ['lint · 0 errors · [CLEAN]',0],
+ ['agent-02 · branch pushed',0]];
+let li=0;
+function pushLog(){const d=new Date();const t=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+  const [msg,sig]=LOG[li++%LOG.length];
+  document.querySelectorAll('.logfeed').forEach(f=>{
+    const row=document.createElement('div');row.className='ll'+(sig?' sig':'');
+    row.innerHTML='<span class="lt">'+t+'</span>'+msg;
+    f.prepend(row);while(f.children.length>6)f.removeChild(f.lastChild);});}
+for(let k=0;k<5;k++)pushLog();
+setInterval(pushLog,1500);
+
+/* ===== draggable divider per stage ===== */
+function initCompare(sec){
+  let dragging=false;
+  const set=p=>{p=Math.max(6,Math.min(94,p));sec.style.setProperty('--cut',p+'%');};
+  sec.addEventListener('pointerdown',e=>{dragging=true;sec.setPointerCapture(e.pointerId);
+    set(e.clientX/innerWidth*100);});
+  sec.addEventListener('pointermove',e=>{if(dragging)set(e.clientX/innerWidth*100);});
+  sec.addEventListener('pointerup',()=>dragging=false);
+  sec.addEventListener('pointercancel',()=>dragging=false);
+  sec.setCut=set;
+}
+document.querySelectorAll('.stage').forEach(initCompare);
+
+/* keyboard nudge on the visible stage */
+addEventListener('keydown',e=>{
+  const sec=[...document.querySelectorAll('.stage')].find(s=>{const r=s.getBoundingClientRect();return r.top>-innerHeight/2&&r.top<innerHeight/2;});
+  if(!sec)return;const cur=parseFloat(getComputedStyle(sec).getPropertyValue('--cut'))||50;
+  if(e.key==='ArrowLeft')sec.setCut(cur-4);
+  if(e.key==='ArrowRight')sec.setCut(cur+4);});
+
+/* one-time auto sweep when a stage enters view */
+const eased=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function sweep(sec){const seq=[[50,82],[82,22],[22,50]];let i=0;
+  function leg(){if(i>=seq.length)return;const [a,b]=seq[i++];const t0=performance.now(),D=760;
+    (function f(n){const k=Math.min(1,(n-t0)/D);sec.setCut(a+(b-a)*eased(k));
+      k<1?requestAnimationFrame(f):leg();})(t0);}
+  leg();}
+const seen=new Set();
+new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting&&!seen.has(en.target)){seen.add(en.target);setTimeout(()=>sweep(en.target),350);}
+  if(en.isIntersecting){document.getElementById('step').textContent=en.target.id==='s1'?'01 / 02':'02 / 02';}
+}),{threshold:.6}).observe(document.getElementById('s1'));
+new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting&&!seen.has(en.target)){seen.add(en.target);setTimeout(()=>sweep(en.target),350);}
+  if(en.isIntersecting){document.getElementById('step').textContent='02 / 02';}
+}),{threshold:.6}).observe(document.getElementById('s2'));
+</script>
+</body>
+</html>

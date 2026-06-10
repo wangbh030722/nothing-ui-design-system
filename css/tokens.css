@@ -1,0 +1,35 @@
+/* nothing-ui · tokens — edit here to re-skin globally.
+   Authentic Nothing fonts are loaded from ../fonts/ if present (proprietary, NOT shipped);
+   open fallbacks (Doto/Geist Mono) are pulled via the <link> in index.html. */
+
+/* === Authentic Nothing typefaces (local). PROPRIETARY — local use only; the public build ships open substitutes (Doto/Geist Mono) and omits these files. === */
+@font-face{font-family:'NDot';src:url('../fonts/Ndot57-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+/* NType82 (UI/headline) intentionally commented out: no legally-clean file on hand.
+   The open fallback Helvetica Neue/Arial (a real grotesque) renders correctly.
+   Obtain a licensed NType82-Regular.otf + NType82-Headline.otf, drop them in ../fonts/,
+   then UNCOMMENT to get the authentic face. (Do NOT use the xeji01 mirror — that file is a mislabeled serif.) */
+/* @font-face{font-family:'NType82';src:url('../fonts/NType82-Regular.otf') format('opentype');font-weight:400;font-display:swap} */
+/* @font-face{font-family:'NType82';src:url('../fonts/NType82-Headline.otf') format('opentype');font-weight:600;font-display:swap} */
+@font-face{font-family:'NType82 Mono';src:url('../fonts/NType82Mono-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+:root{
+  --black:#000; --dark-grey:#171717; --grey:#2A2A2A; --light-grey:#5A5A5A; --white:#FFF;
+  --bg:#000; --surface:#0C0C0C; --raised:#171717;
+  --line:#262626; --line-2:#3A3A3A;
+  --muted:#5A5A5A; --secondary:#8C8C8C; --primary:#EDEDED; --display:#FFF;
+  --accent:#D71921; --accent-ink:#FFFFFF; --accent-text:#FF4438;
+  --success:#7BE38A; --warning:#F2C94C; --error:#FF5247;
+  --f-display:'NDot','Doto',monospace; --f-ui:'NType82','Helvetica Neue',Arial,system-ui,sans-serif; --f-mono:'NType82 Mono','Geist Mono',ui-monospace,monospace;
+  --f-head:'NType82','Helvetica Neue',Arial,sans-serif;
+  --dotbg:rgba(255,255,255,.48);
+  --glass:rgba(16,16,16,.9); --glass-brd:rgba(255,255,255,.09);
+  --r-sm:6px; --r-md:8px; --r-pill:999px; --ease:ease-in-out;
+}
+[data-theme="light"]{
+  --bg:#F2F2F2; --surface:#FFF; --raised:#EDEDED; --line:#E2E2E2; --line-2:#CFCFCF;
+  --muted:#9A9A9A; --secondary:#585A5A; --primary:#1C1C1C; --display:#000;
+  --dotbg:rgba(0,0,0,.42); --glass:rgba(255,255,255,.96); --glass-brd:rgba(0,0,0,.08);
+  /* light mode: signal red holds on white; foreground variant darkened slightly for text/border/icon contrast */
+  --accent:#D71921; --accent-text:#C2141C;
+  /* status colors darkened for readable foreground on light surfaces */
+  --success:#3D8B4A; --warning:#9C6B00; --error:#D23B30;
+}
