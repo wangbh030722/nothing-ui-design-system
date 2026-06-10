@@ -24,10 +24,6 @@ A zero-dependency, Nothing-inspired UI system for the web. It combines monochrom
 ## Quick Start
 
 ```html
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@100,400;100,500;100,700;100,900&family=Geist+Mono:wght@400;500&display=swap"
->
 <link rel="stylesheet" href="css/nothing-ui.css">
 
 <body data-theme="dark">
@@ -52,6 +48,7 @@ Switch themes on any ancestor:
 │   └── nothing-ui.css   Components and layout primitives
 ├── js/
 │   └── nothing-ui.js    Theme, controls, and dot-icon rendering
+├── fonts/open/          Bundled SIL OFL typefaces and licenses
 ├── docs/                Repository screenshots
 ├── index.html           Visual component reference
 ├── demo.html            Interactive comparison experience
@@ -79,9 +76,9 @@ The 25x25 display uses a circular mask with inactive LED texture, white active c
 
 ## Fonts
 
-The public project uses open fallbacks: Doto, Geist Mono, and Helvetica/Arial. Licensed NDot or NType82 files may be added locally as described in [`fonts/README.md`](fonts/README.md).
+The repository bundles a self-contained, open-source type system: **Doto** for round-dot display type, **Geist** for UI and headlines, **Geist Mono** for labels and data, and **Newsreader Italic** for restrained editorial accents.
 
-Proprietary font files are intentionally excluded by `.gitignore` and must never be committed or redistributed with this project.
+All bundled font files are licensed under the SIL Open Font License 1.1. Sources and license copies are listed in [`fonts/README.md`](fonts/README.md). Proprietary Nothing font files remain excluded and must not be committed or redistributed.
 
 ## Contributing
 

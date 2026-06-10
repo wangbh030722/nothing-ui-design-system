@@ -1,4 +1,5 @@
-# Nothing's fonts are PROPRIETARY — never commit them to a public repo.
+# Proprietary font files placed directly in fonts/ must never be committed.
+# Audited SIL OFL files live in fonts/open/ and are intentionally tracked.
 fonts/*.otf
 fonts/*.ttf
 fonts/*.woff

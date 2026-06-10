@@ -4,6 +4,10 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+- Bundled Doto, Geist, Geist Mono, and Newsreader Italic for consistent offline rendering.
+- Restored a restrained editorial italic role for brand lines and pull quotes.
+- Updated typography documentation and CI font licensing checks.
+
 ## [1.0.0] - 2026-06-10
 
 - Added 40+ zero-dependency UI components.

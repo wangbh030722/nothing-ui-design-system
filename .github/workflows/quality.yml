@@ -23,12 +23,24 @@ jobs:
           test -f css/nothing-ui.css
           test -f js/nothing-ui.js
           test -f docs/preview.png
-      - name: Reject proprietary font files
+      - name: Verify bundled open fonts
         run: |
-          if find . -type f \( -iname '*.otf' -o -iname '*.ttf' -o -iname '*.woff' -o -iname '*.woff2' \) | grep -q .; then
-            echo "Proprietary or bundled font files must not be committed."
+          expected_fonts='
+          ./fonts/open/Doto-ROND-wght.ttf
+          ./fonts/open/Geist-Regular.ttf
+          ./fonts/open/Geist-SemiBold.ttf
+          ./fonts/open/GeistMono-Regular.ttf
+          ./fonts/open/GeistMono-Medium.ttf
+          ./fonts/open/Newsreader-Italic.ttf'
+          actual_fonts="$(find . -type f \( -iname '*.otf' -o -iname '*.ttf' -o -iname '*.woff' -o -iname '*.woff2' \) | sort)"
+          if [ "$actual_fonts" != "$(printf '%s\n' "$expected_fonts" | sed '/^$/d' | sort)" ]; then
+            echo "Font files must match the audited SIL OFL allowlist."
             exit 1
           fi
+          test -f fonts/open/OFL-Doto.txt
+          test -f fonts/open/OFL-Geist.txt
+          test -f fonts/open/OFL-GeistMono.txt
+          test -f fonts/open/OFL-Newsreader.txt
       - name: Reject local-only links in public pages
         run: |
           if grep -R -n -E 'localhost:[0-9]+|file:///Users/' README.md index.html demo.html SPEC.md; then

@@ -1,16 +1,11 @@
 /* nothing-ui · tokens — edit here to re-skin globally.
-   Authentic Nothing fonts are loaded from ../fonts/ if present (proprietary, NOT shipped);
-   open fallbacks (Doto/Geist Mono) are pulled via the <link> in index.html. */
-
-/* === Authentic Nothing typefaces (local). PROPRIETARY — local use only; the public build ships open substitutes (Doto/Geist Mono) and omits these files. === */
-@font-face{font-family:'NDot';src:url('../fonts/Ndot57-Regular.otf') format('opentype');font-weight:400;font-display:swap}
-/* NType82 (UI/headline) intentionally commented out: no legally-clean file on hand.
-   The open fallback Helvetica Neue/Arial (a real grotesque) renders correctly.
-   Obtain a licensed NType82-Regular.otf + NType82-Headline.otf, drop them in ../fonts/,
-   then UNCOMMENT to get the authentic face. (Do NOT use the xeji01 mirror — that file is a mislabeled serif.) */
-/* @font-face{font-family:'NType82';src:url('../fonts/NType82-Regular.otf') format('opentype');font-weight:400;font-display:swap} */
-/* @font-face{font-family:'NType82';src:url('../fonts/NType82-Headline.otf') format('opentype');font-weight:600;font-display:swap} */
-@font-face{font-family:'NType82 Mono';src:url('../fonts/NType82Mono-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+   The bundled type system is fully open source under SIL OFL 1.1. */
+@font-face{font-family:'Doto';src:url('../fonts/open/Doto-ROND-wght.ttf') format('truetype');font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:'Geist';src:url('../fonts/open/Geist-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Geist';src:url('../fonts/open/Geist-SemiBold.ttf') format('truetype');font-style:normal;font-weight:600;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('../fonts/open/GeistMono-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('../fonts/open/GeistMono-Medium.ttf') format('truetype');font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:'Newsreader';src:url('../fonts/open/Newsreader-Italic.ttf') format('truetype');font-style:italic;font-weight:400;font-display:swap}
 :root{
   --black:#000; --dark-grey:#171717; --grey:#2A2A2A; --light-grey:#5A5A5A; --white:#FFF;
   --bg:#000; --surface:#0C0C0C; --raised:#171717;
@@ -18,8 +13,8 @@
   --muted:#5A5A5A; --secondary:#8C8C8C; --primary:#EDEDED; --display:#FFF;
   --accent:#D71921; --accent-ink:#FFFFFF; --accent-text:#FF4438;
   --success:#7BE38A; --warning:#F2C94C; --error:#FF5247;
-  --f-display:'NDot','Doto',monospace; --f-ui:'NType82','Helvetica Neue',Arial,system-ui,sans-serif; --f-mono:'NType82 Mono','Geist Mono',ui-monospace,monospace;
-  --f-head:'NType82','Helvetica Neue',Arial,sans-serif;
+  --f-display:'Doto',monospace; --f-ui:'Geist','Helvetica Neue',Arial,system-ui,sans-serif; --f-mono:'Geist Mono',ui-monospace,monospace;
+  --f-head:'Geist','Helvetica Neue',Arial,sans-serif; --f-editorial:'Newsreader',Georgia,serif;
   --dotbg:rgba(255,255,255,.48);
   --glass:rgba(16,16,16,.9); --glass-brd:rgba(255,255,255,.09);
   --r-sm:6px; --r-md:8px; --r-pill:999px; --ease:ease-in-out;

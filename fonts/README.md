@@ -1,16 +1,14 @@
 # Fonts
 
-This library ships with **open-source fallback fonts** only (Doto · Geist Mono, loaded from Google Fonts in `index.html`; UI/headline fall back to Helvetica/Arial). There is **no serif** — Nothing's system has none.
+The public build is self-contained and bundles four open-source font families in `fonts/open/`:
 
-If you have properly licensed Nothing typefaces, place the relevant files in this folder:
+| Role | Family | Source | License |
+|---|---|---|---|
+| Dot display | Doto | [Google Fonts](https://github.com/google/fonts/tree/main/ofl/doto) | SIL OFL 1.1 |
+| UI and headline | Geist | [Google Fonts](https://github.com/google/fonts/tree/main/ofl/geist) | SIL OFL 1.1 |
+| Mono and data | Geist Mono | [Google Fonts](https://github.com/google/fonts/tree/main/ofl/geistmono) | SIL OFL 1.1 |
+| Editorial accent | Newsreader Italic | [Google Fonts](https://github.com/google/fonts/tree/main/ofl/newsreader) | SIL OFL 1.1 |
 
-```
-Ndot57-Regular.otf
-NType82-Regular.otf
-NType82-Headline.otf
-NType82Mono-Regular.otf
-```
+`css/tokens.css` loads these files locally, so the component reference works offline and renders consistently after cloning. Newsreader Italic is intentionally limited to brand lines, pull quotes, and other expressive moments; functional UI remains sans-serif.
 
-`css/tokens.css` declares NDot and NType82 Mono. The NType82 UI/headline declarations remain commented out until licensed files are supplied; follow the comments in that file to enable them.
-
-**These fonts are proprietary to Nothing.** They are git-ignored on purpose. Do not commit, redistribute, or obtain them from unofficial mirrors. Acquire an appropriate license from the rights holder.
+The license text for each family is stored beside the font files. Proprietary NDot, NType, or Lettera files are not part of this project. Do not commit, redistribute, or obtain those assets from unofficial mirrors.

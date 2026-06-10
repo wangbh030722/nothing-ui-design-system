@@ -16,6 +16,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 ::selection{background:var(--accent);color:var(--accent-ink)}
 .label{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--secondary)}
 .fdisplay{font-family:var(--f-display);color:var(--display)} .fui{font-family:var(--f-ui)} .mono{font-family:var(--f-mono)}
+.editorial{font-family:var(--f-editorial);font-style:italic}
 .muted{color:var(--secondary)} .faint{color:var(--muted)}
 .ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block}
 .ico.sm{width:16px;height:16px}
@@ -88,6 +89,10 @@ h4.sub:first-of-type{margin-top:0}
 .glyphset{font-family:var(--f-display);color:var(--secondary);font-size:13px;line-height:1.9;letter-spacing:.12em;word-break:break-all;margin-top:10px}
 .weights{display:flex;gap:18px;margin-top:14px;color:var(--secondary);font-family:var(--f-ui);font-size:13px}
 .weights b{color:var(--primary)}
+.editorial-specimen{font-family:var(--f-editorial);font-style:italic;font-weight:400;font-size:30px;line-height:1.05;
+  color:var(--display);letter-spacing:-.025em;max-width:13ch}
+.editorial-note{font-family:var(--f-mono);font-size:8px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-top:8px;max-width:32ch}
 
 /* 03 icons */
 .icogrid{display:grid;grid-template-columns:repeat(8,1fr);gap:14px;color:var(--primary)}

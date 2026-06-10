@@ -13,7 +13,6 @@ The keywords **MUST**, **MUST NOT**, **NEVER**, **ALWAYS** are normative. Violat
 <!doctype html>
 <html lang="en" data-theme="dark"> <!-- or "light"; dark is the default -->
 <head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:ROND,wght@100,400;100,500;100,700;100,900&family=Geist+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="css/nothing-ui.css">
 </head>
 <body>
@@ -24,7 +23,7 @@ The keywords **MUST**, **MUST NOT**, **NEVER**, **ALWAYS** are normative. Violat
 ```
 
 - **MUST** load `css/nothing-ui.css` (it imports `css/tokens.css`). **MUST NOT** copy token values into inline styles or a second stylesheet.
-- **MUST** keep the Google Fonts `<link>` exactly as above — Doto requires the `ROND` axis in the request URL or its dots render square.
+- **MUST** keep the bundled `fonts/open/` directory beside the CSS. `tokens.css` loads every typeface locally, including Doto's round-dot variable font.
 - Theme switching is **only** `data-theme="dark" | "light"` on `<html>` (or a region). **MUST NOT** invent a third theme or override token values per-page.
 - **MUST NOT** add any other CSS framework, reset, or font (no Tailwind, no Bootstrap, no Inter/Roboto/Instrument Serif).
 
@@ -35,7 +34,7 @@ The keywords **MUST**, **MUST NOT**, **NEVER**, **ALWAYS** are normative. Violat
 1. **Monochrome first.** Black / grey / white carry the entire interface. ≤4 greys per screen, all from tokens.
 2. **The accent is a signal, never decoration.** `--accent` (Nothing red `#D71921`) appears **only** for: needs-decision counts, `NEEDS INPUT` states, over-limit values, live/recording dots, notification badges, and the accent swatch itself. A typical screen shows **0–2** red elements. If you are about to use red on a button, tab, link, slider, or hover — stop; that is wrong.
 3. **Active states invert black↔white, they do not colorize.** Primary buttons, switches ON, selected chips/tabs/pagination/calendar-today, stepper current, progress fills, gauges: all use `--display` on `--bg` (or inverted). NEVER the accent.
-4. **No serif typeface, anywhere.** Nothing's system has none. Headlines use `--f-head` (grotesque, weight 600). Newsreader/Instrument Serif/Georgia are all forbidden.
+4. **Functional UI stays sans-serif; the editorial italic is a page-level accent, never a component.** Headlines use `--f-head` (grotesque, weight 600). `--f-editorial` (Newsreader Italic) is the sole serif exception, allowed **only in showcase / marketing / page-level HTML** — a hero line, a section intro, a pull quote: at most one short expressive sentence per view. It **MUST NOT appear inside any reusable component** (button, input, card, table, nav, modal, chip, list, dashboard tile, …). Components ship sans-serif only, so anything you build *from* the library is serif-free by default; the italic is something a page author adds *around* components, not inside them. Never use it for controls, data, or long body copy.
 5. **No shadows, no gradients.** Depth comes from 1px hairlines (`--line`/`--line-2`), whitespace, and frosted glass (`backdrop-filter: blur` is material, not shadow — it is allowed). `box-shadow` is forbidden (sole exception: the `0 0 0 2px` ring on stacked avatars, which is a border substitute).
 6. **Cards are borderless frosted glass.** `background: var(--glass)` + `backdrop-filter: blur(12–16px)`, radius `--r-md` (8px), no `border` (a ≤1px `--glass-brd` inner hairline is optional), hover = `translateY(-2px)`, never a shadow or border change.
 7. **Every dot is a complete circle.** Dot-matrix icons are CSS-grid cells with `border-radius: 50%`. NEVER build dot icons with `mask`, `clip-path`, or dotted borders — they clip dots into partial circles.
@@ -71,19 +70,20 @@ The keywords **MUST**, **MUST NOT**, **NEVER**, **ALWAYS** are normative. Violat
 
 Rules: accent fill stays the same red in both themes; the **foreground** variant brightens on dark (`#FF4438`) and darkens on light (`#C2141C`). Status colors darken in light mode. Body text is soft (`#1C1C1C`), never pure black.
 
-### 2.3 Typography — four roles, two routes
+### 2.3 Typography — five roles, bundled locally
 
-| Role | Token | Authentic (local, licensed) | Open fallback (shipped) | Used for |
-|---|---|---|---|---|
-| Dot display | `--f-display` | NDot57 | **Doto** (`ROND` 100, weight ≤500) | wordmark, hero/standalone numerals, glyphs, clocks, module numbers |
-| UI / body | `--f-ui` | NType82 | **Helvetica Neue / Arial** | body copy, control labels |
-| Mono / data | `--f-mono` | NType82 Mono | **Geist Mono** | UPPERCASE labels (`.08–.12em` tracking), data, code, table cells, timestamps |
-| Headline | `--f-head` | NType82 Headline (600) | **Helvetica Neue / Arial 600** | card/dialog/section titles |
+| Role | Token | Bundled family | Used for |
+|---|---|---|---|
+| Dot display | `--f-display` | **Doto** (`ROND` 100, weight ≤500) | wordmark, hero/standalone numerals, glyphs, clocks, module numbers |
+| UI / body | `--f-ui` | **Geist** | body copy, control labels |
+| Mono / data | `--f-mono` | **Geist Mono** | UPPERCASE labels (`.08–.12em` tracking), data, code, table cells, timestamps |
+| Headline | `--f-head` | **Geist SemiBold** | card/dialog/section titles |
+| Editorial accent | `--f-editorial` | **Newsreader Italic** | short brand lines and pull quotes only |
 
 - Every **standalone number** (calendar dates, page numbers, stepper indices, counts, percentages, gauge readings) **MUST** use `--f-display`, including its `%` sign. Letter units (GB, K) stay small `--f-mono`.
 - Labels are `--f-mono`, uppercase, 9–10px, letter-spacing `.08–.14em`, color `--secondary`/`--muted`.
 - Base body: 11px `--f-mono`, line-height 1.45. `font-variation-settings:'ROND' 100` is set on `body` — do not unset it.
-- Proprietary fonts: `@font-face` blocks for NType82 are **commented out** in `tokens.css` (no legally clean file). Drop licensed `.otf`s into `fonts/` and uncomment. NEVER ship them in a public repo; `.gitignore` already excludes them.
+- The bundled families are SIL OFL 1.1 fonts. Proprietary NDot/NType assets are not required and MUST NOT be committed.
 
 ### 2.4 Geometry & motion
 
@@ -151,12 +151,12 @@ When you need a component this library doesn't have: compose it from tokens + th
 
 - [ ] Zero raw hex / px radii / font names in your markup — tokens only
 - [ ] ≤2 red elements on screen, all genuine signals; every active state is black↔white inversion
-- [ ] No serif anywhere; standalone numerals (and their `%`) are dot-display; labels are uppercase mono
+- [ ] Functional UI is sans-serif; editorial italic appears only in showcase/page-level copy — **never inside a component**; standalone numerals (and their `%`) are dot-display
 - [ ] No `box-shadow`, no gradients, no borders on cards; hairlines are 1px token colors
 - [ ] Dot field: difference-blend layer behind cards, ~1.3px/~120px, fixed attachment
 - [ ] Dot icons are complete circles (grid cells, no masks); 9×9 scaled only via `--gs`
 - [ ] Both `data-theme="dark"` and `"light"` verified; dashboards stay dark
 - [ ] Hover = opacity/translateY only; easing `ease-in-out`
-- [ ] Proprietary fonts not committed (`fonts/*.otf` ignored); Google Fonts link includes `ROND`
+- [ ] Only the audited SIL OFL font allowlist is committed; proprietary fonts remain excluded
 
 **Final test:** place your screen next to `index.html`. If a stranger can tell which one wasn't shipped with the library, fix yours.
