@@ -98,3 +98,58 @@ const t_dark=document.getElementById('t-dark'),t_light=document.getElementById('
   seg('card-seg',16,12,'var(--display)');
   seg('seg-mem',22,17,'var(--display)');seg('ag-run',12,5,'var(--display)');seg('ag-idle',12,6,'var(--secondary)');seg('ag-need',12,1,'var(--accent)');seg('seg-bat',20,17,'var(--display)');
   const sp=document.getElementById('spark');[16,30,22,34,26,32,14,28,34,20,30,24,34].forEach(h=>{const i=document.createElement('i');i.style.height=h+'px';i.style.background=h>30?'var(--display)':'var(--muted)';sp.appendChild(i);});
+
+  /* ===== interactive components — click to activate. State changes reuse the existing
+     `.on` / `.sel` inversion classes only; never introduces a new color. ===== */
+  document.addEventListener('click',e=>{
+    // single active among siblings: tabs, pill tabs, segmented, button group, nav bar
+    const seg=e.target.closest('.tabs span,.tabpills span,.seg button,.bgroup .btn,.navbar .i');
+    if(seg&&seg.parentElement){[...seg.parentElement.children].forEach(c=>c.classList&&c.classList.remove('on'));seg.classList.add('on');}
+    // pagination — numeric pages only (skip arrows / ellipsis)
+    const pg=e.target.closest('.pager a');
+    if(pg&&/^\d+$/.test(pg.textContent.trim())){pg.parentElement.querySelectorAll('a').forEach(a=>a.classList.remove('on'));pg.classList.add('on');}
+    // chips & tags toggle (skip inline-styled status chips like ● CONNECTED)
+    const chip=e.target.closest('.chip,.tag'); if(chip&&!chip.getAttribute('style')) chip.classList.toggle('on');
+    // calendar day select (leave today's marker)
+    const day=e.target.closest('.cal .grid .d');
+    if(day&&!day.classList.contains('today')){day.parentElement.querySelectorAll('.d.sel').forEach(d=>d.classList.remove('sel'));day.classList.add('sel');}
+    // rating — fill up to the clicked dot
+    const star=e.target.closest('.rate i');
+    if(star){const s=[...star.parentElement.children],idx=s.indexOf(star);s.forEach((x,k)=>x.classList.toggle('on',k<=idx));}
+    // tree node select
+    const node=e.target.closest('.tree .n');
+    if(node){node.closest('.tree').querySelectorAll('.n.sel').forEach(n=>n.classList.remove('sel'));node.classList.add('sel');}
+    // checkbox toggle (inject / remove the dot-matrix check)
+    const box=e.target.closest('.box');
+    if(box){box.classList.toggle('on');box.innerHTML=box.classList.contains('on')?'<svg class="ico sm" style="width:12px;height:12px"><use href="#i-check"/></svg>':'';}
+    // radio select within its module
+    const rdo=e.target.closest('.rdo');
+    if(rdo){(rdo.closest('.mod')||document).querySelectorAll('.rdo').forEach(r=>r.classList.remove('on'));rdo.classList.add('on');}
+  });
+  // number stepper +/-
+  document.querySelectorAll('.nstep').forEach(ns=>{const v=ns.querySelector('.v'),b=ns.querySelectorAll('button');
+    if(b[0])b[0].onclick=()=>v.textContent=Math.max(0,(+v.textContent||0)-1);
+    if(b[1])b[1].onclick=()=>v.textContent=(+v.textContent||0)+1;});
+
+  /* ===== ambient "live" motion in the Applied console (only runs where these nodes exist) ===== */
+  const app=document.querySelector('.app');
+  if(app){
+    const pad=n=>String(n).padStart(2,'0');
+    // SESSION UPTIME counts up (mm:ss), live dot preserved
+    const ck=app.querySelector('.clock');
+    if(ck){let t=4*60+17;const col='<span class="colon" style="--pxd:8px"><i></i><i></i></span>';
+      const draw=()=>ck.innerHTML='<span class="livedot"></span>'+pad(Math.floor(t/60))+col+pad(t%60);
+      draw();setInterval(()=>{t++;draw();},1000);}
+    // CPU gauge breathes 62–84%
+    const arc=app.querySelector('.gauge svg circle:last-of-type'),gn=app.querySelector('.gauge .num b');
+    if(arc&&gn){let g=0;setInterval(()=>{g+=.18;const v=Math.round(73+Math.sin(g)*11);
+      if(gn.firstChild)gn.firstChild.textContent=v;arc.setAttribute('stroke-dashoffset',(239*(1-v/100)).toFixed(1));},900);}
+    // NOW RUNNING spark — equalizer, heights shift in place (CSS transitions smooth it)
+    const spk=app.querySelector('#spark');
+    if(spk){setInterval(()=>{[...spk.children].forEach((b,i)=>{const h=12+Math.round(Math.abs(Math.sin(Date.now()/600+i*0.6))*24);
+      b.style.height=h+'px';b.style.background=h>28?'var(--display)':'var(--muted)';});},500);}
+    // MEMORY segbar drifts ±3 cells
+    let mt=0;const memseg=document.getElementById('seg-mem');
+    if(memseg)setInterval(()=>{mt+=.5;const f=17+Math.round(Math.sin(mt)*3);
+      [...memseg.children].forEach((c,i)=>c.style.background=i<f?'var(--display)':'var(--line)');},1500);
+  }

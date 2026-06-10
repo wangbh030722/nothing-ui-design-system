@@ -417,6 +417,11 @@ td{font-family:var(--f-mono);font-size:11px;padding:9px 8px;border-bottom:1px so
 .qrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}.qrow:last-child{border:0}.qrow .l{font-family:var(--f-ui);font-size:14px;color:var(--primary)}.qrow .meta{margin-left:auto;margin-right:12px}
 .srow+.srow{margin-top:13px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+/* live motion in the applied console — smooth transitions for JS-driven values + a slow progress creep. ease-in-out only, no bounce. */
+.gauge svg circle{transition:stroke-dashoffset .9s var(--ease)}
+.spark i{transition:height .45s var(--ease)}
+.app .trk::after{animation:trkcreep 7s var(--ease) infinite alternate}
+@keyframes trkcreep{from{width:48%}to{width:66%}}
 /* Applied console is a product UI → always dark (like Nothing's own dashboard), so all its greens stay the one electric lime & the colon matches */
 .appwrap{position:relative;isolation:isolate;padding:48px 0 64px;
   --bg:#000;--surface:#0C0C0C;--raised:#171717;--line:#262626;--line-2:#3A3A3A;
