@@ -3,9 +3,9 @@
 一套受 **Nothing**（nothing.tech）启发的开源设计语言，面向开发者工具 / AI Agent 类产品。本文件是**单一事实源**：包含完整的设计原则、token、组件规范与反模式；同目录 `index.html` 是其可视化实现（dark / light 双模 + 组件库 + 应用示例）。
 
 > **如何使用本文档**
-> - 给 AI（Claude / Gemini 等）生成或修改界面前，请**完整读本文件**；所有视觉数值取自下方 token，不要手写裸值；产出后用文末 Checklist 自检。
-> - 本文件刻意写得自洽、可移植：可作为蓝本交给设计型模型（如 Gemini）去**重新设计/扩展规范**，再把结果交给实现型模型（如 Claude）落地为代码。改 token 即可全局改皮。
-> - 参考来源：官网 `us.nothing.tech`、创意社区 `playground.nothing.tech`、社区 skill `dominikmartn/nothing-design`。公开版本内置经过 SIL OFL 1.1 授权的开源字体，不依赖 Nothing 的专有字体文件。
+> - 在生成或修改界面前请**完整读本文件**；所有视觉数值取自下方 token，不要手写裸值；产出后用文末 Checklist 自检。
+> - 本文件刻意写得自洽、可移植：可整份作为规范蓝本驱动界面的生成与扩展。改 token 即可全局改皮。
+> - 公开版本内置经过 SIL OFL 1.1 授权的开源字体，不依赖 Nothing 的专有字体文件。
 
 ---
 

@@ -2,92 +2,54 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-white.svg)](LICENSE)
 [![Zero dependencies](https://img.shields.io/badge/dependencies-0-D71921.svg)](#quick-start)
-[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-black.svg)](https://wangbh030722.github.io/nothing-ui-design-system/demo.html)
+[![Live demo](https://img.shields.io/badge/demo-GitHub%20Pages-black.svg)](https://wangbh030722.github.io/nothing-ui-design-system/)
 
-A zero-dependency, Nothing-inspired UI system for the web. It combines monochrome surfaces, round-dot typography and iconography, a restrained signal-red accent, and sparse adaptive dot fields.
+A **Nothing-inspired** UI system for the web. Monochrome surfaces, round-dot type and icons, a single signal-red accent, and a sparse dot field that inverts against whatever sits behind it.
 
-> Pure HTML, CSS custom properties, and a small amount of vanilla JavaScript. No framework, package manager, or build step.
+Zero dependencies — pure HTML, CSS custom properties, and a little vanilla JavaScript. No framework, no build step.
 
-![Generic AI dashboard compared with nothing-ui](docs/preview.png)
+![nothing-ui](docs/hero.gif)
 
-**[Open the interactive comparison](https://wangbh030722.github.io/nothing-ui-design-system/demo.html)** · **[Browse every component](https://wangbh030722.github.io/nothing-ui-design-system/)** · **[Read the generation contract](SPEC.md)**
+**[Live demo](https://wangbh030722.github.io/nothing-ui-design-system/demo.html)** · **[All components](https://wangbh030722.github.io/nothing-ui-design-system/)** · **[SPEC.md](SPEC.md)**
 
-## Why nothing-ui
-
-- **40+ components** covering foundations, forms, navigation, feedback, data display, and applied dashboards.
-- **Dark and light themes** through one `data-theme` attribute.
-- **Two dot systems:** scalable 9x9 interface icons and a canonical 25x25 circular Glyph Matrix.
-- **AI-ready specification:** `SPEC.md` gives coding agents exact tokens, rules, markup recipes, and a release checklist.
-- **Portable by design:** copy the files into any static site or adapt the tokens without introducing a toolchain.
-- **Deliberately restrained:** no gradients, decorative shadows, oversized radii, or accent-color overload.
-
-## Quick Start
+## Quick start
 
 ```html
 <link rel="stylesheet" href="css/nothing-ui.css">
 
-<body data-theme="dark">
-  <button class="btn btn-primary">Run agent</button>
+<body data-theme="dark">            <!-- or "light" -->
+  <button class="btn btn-primary">Button</button>
 </body>
 
 <script src="js/nothing-ui.js"></script>
 ```
 
-Switch themes on any ancestor:
+## What's inside
 
-```html
-<main data-theme="light">...</main>
-```
+- **40+ components** — forms, navigation, feedback, data display, applied dashboards
+- **Dark / light** through one `data-theme` attribute
+- **Two dot systems** — scalable 9×9 interface icons and a 25×25 circular Glyph Matrix
+- **Self-hosted OFL fonts** — Doto, Geist, Geist Mono, Newsreader
+- **`SPEC.md`** — a generation contract precise enough to reproduce the look with zero drift
 
-## Project Structure
+![Glyph Matrix](docs/glyph-matrix.png)
 
-```text
-.
-├── css/
-│   ├── tokens.css       Design tokens and font roles
-│   └── nothing-ui.css   Components and layout primitives
-├── js/
-│   └── nothing-ui.js    Theme, controls, and dot-icon rendering
-├── fonts/open/          Bundled SIL OFL typefaces and licenses
-├── docs/                Repository screenshots
-├── index.html           Visual component reference
-├── demo.html            Interactive comparison experience
-├── SPEC.md              Normative generation contract
-└── DESIGN.md            Design rationale and decision history
-```
+## Principles
 
-`index.html` is the visual ground truth. Start with `SPEC.md` when asking an AI coding assistant to generate compatible UI; use `DESIGN.md` when you need the reasoning behind the rules.
+Black, grey, and white carry hierarchy. Red `#D71921` appears only as a signal — live, blocked, needs-input — never as decoration. Controls invert black↔white instead of colorizing. Depth comes from hairlines and whitespace, not shadows. Every dot is a complete circle.
 
-## Visual Language
+## Docs
 
-![Component foundations](docs/components.png)
-
-- Black, grey, and white carry hierarchy.
-- Nothing red `#D71921` is reserved for live, recording, blocked, or needs-input signals.
-- Controls use black/white inversion instead of the accent color.
-- Cards use material, whitespace, and hairlines rather than shadows.
-- Dot-matrix elements share round-dot geometry across type, icons, and status glyphs.
-
-### Glyph Matrix
-
-![25 by 25 Glyph Matrix examples](docs/glyph-matrix.png)
-
-The 25x25 display uses a circular mask with inactive LED texture, white active cells, and an optional red signal state. Smaller interface icons use a scalable 9x9 grid via `--gs`.
+| File | What it's for |
+|---|---|
+| `index.html` | Visual reference — the ground truth |
+| `SPEC.md` | Normative rules, tokens, and per-component recipes |
+| `DESIGN.md` | The reasoning behind the system |
 
 ## Fonts
 
-The repository bundles a self-contained, open-source type system: **Doto** for round-dot display type, **Geist** for UI and headlines, **Geist Mono** for labels and data, and **Newsreader Italic** for restrained editorial accents.
+Self-contained and open: Doto, Geist, Geist Mono, and Newsreader Italic — all under the SIL Open Font License 1.1 (see [`fonts/README.md`](fonts/README.md)). Proprietary Nothing typefaces are never bundled.
 
-All bundled font files are licensed under the SIL Open Font License 1.1. Sources and license copies are listed in [`fonts/README.md`](fonts/README.md). Proprietary Nothing font files remain excluded and must not be committed or redistributed.
+## License
 
-## Contributing
-
-Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a pull request. Changes should preserve the token system, work in both themes, and remain build-free.
-
-Security reports should follow [`SECURITY.md`](SECURITY.md). Community participation is governed by the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
-
-## License and Trademark
-
-The code is available under the [MIT License](LICENSE).
-
-This is an independent community project inspired by Nothing's visual language. It is not affiliated with, endorsed by, or sponsored by Nothing Technology Limited. Nothing, NDot, and NType are trademarks or type assets of their respective owners.
+[MIT](LICENSE). An independent project inspired by Nothing's visual language — not affiliated with, endorsed by, or sponsored by Nothing Technology Limited.
