@@ -8,7 +8,7 @@ A **Nothing-inspired** UI system for the web. Monochrome surfaces, round-dot typ
 
 Zero dependencies — pure HTML, CSS custom properties, and a little vanilla JavaScript. No framework, no build step.
 
-![nothing-ui](docs/hero.gif)
+![Generic AI dashboard versus nothing-ui](docs/preview.png)
 
 **[Live demo](https://wangbh030722.github.io/nothing-ui-design-system/demo.html)** · **[All components](https://wangbh030722.github.io/nothing-ui-design-system/)** · **[SPEC.md](SPEC.md)**
 
