@@ -1,86 +1,86 @@
 # NOTHING-INSPIRED DESIGN SYSTEM
 
-一套受 **Nothing**（nothing.tech）启发的开源设计语言，面向开发者工具 / AI Agent 类产品。本文件是**单一事实源**：包含完整的设计原则、token、组件规范与反模式；同目录 `index.html` 是其可视化实现（dark / light 双模 + 组件库 + 应用示例）。
+An open-source design language inspired by **Nothing** (nothing.tech), aimed at developer tools and AI-agent products. This file is the **single source of truth**: it holds the complete principles, tokens, component specs, and anti-patterns. The `index.html` in the same directory is its visual implementation (dark / light, the component library, and an applied example).
 
-> **如何使用本文档**
-> - 在生成或修改界面前请**完整读本文件**；所有视觉数值取自下方 token，不要手写裸值；产出后用文末 Checklist 自检。
-> - 本文件刻意写得自洽、可移植：可整份作为规范蓝本驱动界面的生成与扩展。改 token 即可全局改皮。
-> - 公开版本内置经过 SIL OFL 1.1 授权的开源字体，不依赖 Nothing 的专有字体文件。
-
----
-
-## 0 · 世界观 / Philosophy
-
-> **像一台精密仪器：黑白为底，信息为主，强调色只为最重要的一件事亮起。**
-
-这是开发者工具 / Agent 系列的设计语言。界面应当**克制、工业、可信赖**——不是消费玩具。它的气质来自三处张力：Swiss/grotesque 排版的秩序、点阵（dot-matrix）的科技复古、以及大量负空间带来的从容。
-
-调性关键词：**单色 monochrome · 圆点点阵 round-dot · 无衬线工业排版 grotesque · 克制的编辑性斜体 · 工业极简 · 大量留白 · 机械式精确**。
-
-当某个细节没被本规范覆盖时，按这句话裁决：**安静、精确、信息优先。**
+> **How to use this document**
+> - Read it in full before generating or modifying any interface. Take every visual value from the tokens below — never hand-write raw values — and self-check against the Checklist at the end.
+> - It is written to be self-contained and portable: the whole file can serve as a blueprint that drives interface generation and extension. Re-skin globally by editing tokens.
+> - The public build bundles SIL OFL 1.1 open fonts and does not depend on Nothing's proprietary font files.
 
 ---
 
-## 1 · 核心原则 / Principles
+## 0 · Philosophy
 
-1. **黑灰白为主，强调色极度稀缺。** 整站以黑 / 灰 / 白构成。强调色（本实例为 Nothing 标志红 `#D71921`）**只用于真正的"信号"**——正在发生、需要决策、超限、实时状态。一屏出现的强调色应屈指可数。Nothing 官网甚至几乎零 UI 强调色（其标志红只在硬件 / 包装 / Glyph 上）。
-2. **控件激活态用黑白反色，而非强调色。** 主按钮、开关、选中态等遵循 Nothing 的"黑白反相"逻辑（暗模式：白底黑字 / 白轨黑钮；亮模式反之），把强调色省给信号。
-3. **结构靠线与留白，不靠阴影。** 用 1px hairline 和慷慨的负空间分层。**禁止投影、渐变、模糊阴影**；深度只用 z-index 层级表达。（玻璃卡的 backdrop-blur 属材质，不属阴影，允许。）
-4. **排版挑大梁。** 用尺寸跳变与字体角色造层级，而非颜色 / 图标 / 边框。单一字重为主（参见字体节）。
-5. **点阵是母语。** 数字、图标、标点凡是"点阵语境"，都用统一的圆点单元表达（见 §4 点阵语言）。
-6. **悬停 = 降不透明度，不是变色。** hover 用 `opacity .8 / .75`、卡片 `translateY(-2px)`；机械、利落、不回弹。
-7. **数值只来自 token。** 不手写裸色值 / 裸像素。
+> **Like a precision instrument: black and white as the base, information first, the accent lighting up only for the single most important thing.**
+
+This is the design language for a developer-tools / agent product line. The interface should feel **restrained, industrial, trustworthy** — not a consumer toy. Its character comes from three tensions: the order of Swiss / grotesque typography, the retro-tech of the dot matrix, and the calm of generous negative space.
+
+Tone keywords: **monochrome · round-dot matrix · grotesque sans typography · restrained editorial italic · industrial minimalism · abundant whitespace · mechanical precision**.
+
+When a detail isn't covered by this spec, decide by this line: **quiet, precise, information-first.**
 
 ---
 
-## 2 · 颜色 / Color
+## 1 · Principles
 
-**暗色优先；灰阶本身即层级，单屏 ≤4 级灰。** 软黑软白（非纯 #000/#FFF 文本），减少刺眼。
+1. **Black / grey / white dominate; the accent is extremely scarce.** The whole surface is built from black / grey / white. The accent (here, Nothing signal-red `#D71921`) is **only for genuine "signals"** — happening now, needs a decision, over limit, live status. The number of accent elements on a screen should be countable on one hand. Nothing's own site uses almost zero UI accent (its red lives only on hardware / packaging / the Glyph).
+2. **Active controls invert black↔white, they don't colorize.** Primary buttons, switches, selected states, etc. follow Nothing's black/white inversion (dark mode: white fill / black text, white track / black knob; light mode the reverse), saving the accent for signals.
+3. **Structure comes from lines and whitespace, not shadows.** Layer with 1px hairlines and generous negative space. **No drop shadows, gradients, or blur shadows**; express depth with z-index only. (A glass card's backdrop-blur is material, not shadow — allowed.)
+4. **Typography does the heavy lifting.** Build hierarchy with size jumps and font roles, not color / icons / borders. Largely a single weight (see the type section).
+5. **The dot matrix is the native tongue.** Numbers, icons, and punctuation — anything in a "dot-matrix context" — use one unified round-dot unit (see §4).
+6. **Hover = drop opacity, not change color.** Hover uses `opacity .8 / .75`; cards `translateY(-2px)`; mechanical, crisp, no rebound.
+7. **Values come only from tokens.** No raw color or pixel values by hand.
 
-| token | Dark | Light | 角色 |
+---
+
+## 2 · Color
+
+**Dark-first; the greyscale itself is the hierarchy — ≤4 greys per screen.** Soft black / soft white for text (not pure #000/#FFF) to reduce glare.
+
+| token | Dark | Light | Role |
 |---|---|---|---|
-| `bg` | `#000000` | `#F2F2F2` | 画布（OLED 黑 / 暖灰纸）|
-| `surface` | `#0E0E0E` | `#FFFFFF` | 面板 / 卡片底 |
-| `raised` | `#171717` | `#EDEDED` | 次级抬升、活动行 |
-| `line` | `#222222` | `#E5E7EB` | hairline 分隔线 |
-| `line-2` | `#333333` | `#CFCFCF` | 可见边框 / 描边 |
-| `muted` | `#5A5A5A` | `#9A9A9A` | 最弱文字、刻度 |
-| `secondary` | `#8C8C8C` | `#585A5A` | 标签、次要文字 |
-| `primary` | `#EDEDED` | `#1C1C1C` | 正文、图标默认色 |
-| `display` | `#FFFFFF` | `#000000` | 标题、英雄数字、反色填充 |
-| `accent` | `#D71921` | `#D71921` | **唯一强调色（信号）= Nothing 标志红**。填充用，红在明暗底都成立 |
-| `accent-text` | `#FF4438` | `#C2141C` | accent 作**前景**（文字/边框/图标）时的变体：暗底提亮、亮底压暗保对比 |
-| `accent-ink` | `#FFFFFF` | `#FFFFFF` | 压在 accent 红填充上的字色（白） |
-| `success` | `#7BE38A` | `#3D8B4A` | 数据状态：良好 / 已连接（绿，仅上数值） |
-| `warning` | `#F2C94C` | `#9C6B00` | 数据状态：注意 / 待定（琥珀，仅上数值） |
-| `error` | `#FF5247` | `#D23B30` | 数据状态：错误。与 accent 同属红系——红即警示，本就是同一信号家族 |
-| `focus` | `rgb(59 130 246 / .55)` | 同左 | 无障碍焦点环——唯一被允许的非单色装饰 |
+| `bg` | `#000000` | `#F2F2F2` | canvas (OLED black / warm-grey paper) |
+| `surface` | `#0E0E0E` | `#FFFFFF` | panels / card base |
+| `raised` | `#171717` | `#EDEDED` | secondary lift, active rows |
+| `line` | `#222222` | `#E5E7EB` | hairline dividers |
+| `line-2` | `#333333` | `#CFCFCF` | visible borders / outlines |
+| `muted` | `#5A5A5A` | `#9A9A9A` | faintest text, ticks |
+| `secondary` | `#8C8C8C` | `#585A5A` | labels, secondary text |
+| `primary` | `#EDEDED` | `#1C1C1C` | body text, default icon color |
+| `display` | `#FFFFFF` | `#000000` | headings, hero numerals, inversion fill |
+| `accent` | `#D71921` | `#D71921` | **the single accent (signal) = Nothing red**. For fills; red holds on both light and dark |
+| `accent-text` | `#FF4438` | `#C2141C` | accent as **foreground** (text/border/icon): brightened on dark, darkened on light for contrast |
+| `accent-ink` | `#FFFFFF` | `#FFFFFF` | text color on top of an accent-red fill (white) |
+| `success` | `#7BE38A` | `#3D8B4A` | data state: good / connected (green, on values only) |
+| `warning` | `#F2C94C` | `#9C6B00` | data state: caution / pending (amber, on values only) |
+| `error` | `#FF5247` | `#D23B30` | data state: error. Same red family as the accent — red *is* the alert, one signal family |
+| `focus` | `rgb(59 130 246 / .55)` | same | accessibility focus ring — the only non-monochrome decoration allowed |
 
-**强调色使用规则（重要）**
-- 强调色**只给信号**：需决策计数、`NEEDS INPUT`、超限值、实时（live）圆点、通知徽标点、accent 色板本身、以及语义 alert。
-- 控件激活态（按钮 / 开关 / 选中 / 当前 tab / 今日 / 步进当前 / 普通进度·表盘·电量）**一律用黑白反色**（`display` ↔ `bg`），**不**用强调色。
-- **前景/填充分两个 token**：`--accent`（标志红 `#D71921`）只做**填充**，其上字色用白 `accent-ink`；`--accent-text` 作**前景**（文字/边框/图标），暗底提亮到 `#FF4438`、亮底压暗到 `#C2141C` 以保对比（≥4.5:1）。success/warning/error 亮色同样整体压暗。
-- 数据状态色只上在**数值本身**，不上在标签或整行底色。
+**Accent rules (important)**
+- The accent is **for signals only**: needs-decision counts, `NEEDS INPUT`, over-limit values, live dots, notification badge dots, the accent swatch itself, and semantic alerts.
+- Active control states (buttons / switches / selected / current tab / today / current step / ordinary progress · gauge · battery) **always use black/white inversion** (`display` ↔ `bg`), **never** the accent.
+- **Foreground and fill are two tokens**: `--accent` (signal-red `#D71921`) is for **fills** only, with white `accent-ink` on top; `--accent-text` is the **foreground** (text/border/icon), brightened to `#FF4438` on dark and darkened to `#C2141C` on light to keep contrast (≥4.5:1). success/warning/error darken on light too.
+- Data-state colors sit **on the value itself**, never on a label or a whole-row background.
 
 ---
 
-## 3 · 字体 / Typography
+## 3 · Typography
 
-五种角色，各司其职。公开版本把字体与许可证一起放在 `fonts/open/`，克隆后无需联网即可保持一致呈现。
+Five roles, each with a job. The public build keeps the fonts and their licenses in `fonts/open/`, so a clone renders identically with no network access.
 
-| 角色 | 开源字体 | 用途 |
+| Role | Open font | Use |
 |---|---|---|
-| **点阵 Display** | **Doto**（`ROND` 轴=100 → 圆点非方块）| 英雄数字、品牌字、glyph、计时器、独立数字 |
-| **UI / 正文** | **Geist** | 正文、副文、UI 文案 |
-| **Mono / Data** | **Geist Mono** | 标签（大写）、数据、代码、导航、时间戳 |
-| **Headline 标题** | **Geist SemiBold** | 卡片标题、弹窗标题、功能标题 |
-| **Editorial Accent** | **Newsreader Italic** | 品牌短句、pull quote、少量表达性时刻 |
+| **Dot Display** | **Doto** (`ROND` axis = 100 → round, not square dots) | hero numerals, wordmark, glyphs, clocks, standalone numbers |
+| **UI / Body** | **Geist** | body, secondary copy, UI text |
+| **Mono / Data** | **Geist Mono** | labels (uppercase), data, code, navigation, timestamps |
+| **Headline** | **Geist SemiBold** | card titles, dialog titles, functional headings |
+| **Editorial Accent** | **Newsreader Italic** | brand lines, pull quotes, a few expressive moments |
 
-> **斜体的边界（重要）**：Newsreader Italic 是表达性口音，不是 UI 基础字体。判定轴 = **页面级 vs 组件级**：它**只允许出现在展示 / 营销 / 页面级 HTML**（hero 句、版块引言、pull quote，每屏至多一句）；**任何可复用组件内部绝不出现**——按钮、输入、卡片、表格、导航、弹窗、chip、列表、仪表盘 tile 等一律无衬线。换言之，用本库搭出来的组件默认就是无衬线的；斜体是页面作者在组件**之外**点缀的口音，不进组件内部。长正文仍用 Geist / Geist Mono。
+> **The boundary of the italic (important)**: Newsreader Italic is an expressive accent, not a base UI face. The axis is **page-level vs component-level**: it is **allowed only in showcase / marketing / page-level HTML** (a hero line, a section intro, a pull quote — at most one short sentence per view); it **must never appear inside any reusable component** — buttons, inputs, cards, tables, navigation, modals, chips, lists, dashboard tiles are all sans-serif. In other words, anything built *from* this library is serif-free by default; the italic is an accent a page author adds *around* components, not inside them. Long body copy still uses Geist / Geist Mono.
 
-> **字体与版权**：Doto、Geist、Geist Mono、Newsreader 均以 SIL OFL 1.1 发布，许可证副本随仓库提供。NDot、NType 与 Lettera 等专有资产不包含在项目中，也不得从非官方镜像获取、提交或再分发。
+> **Fonts and licensing**: Doto, Geist, Geist Mono, and Newsreader are released under SIL OFL 1.1, with license copies shipped in the repo. Proprietary assets such as NDot, NType, and Lettera are not included and must not be obtained from unofficial mirrors, committed, or redistributed.
 
-**字体加载**
+**Font loading**
 ```css
 @font-face{font-family:'Doto';src:url('../fonts/open/Doto-ROND-wght.ttf')}
 @font-face{font-family:'Geist';src:url('../fonts/open/Geist-Regular.ttf');font-weight:400}
@@ -93,106 +93,106 @@
 --f-head:'Geist','Helvetica Neue',Arial,sans-serif;
 --f-editorial:'Newsreader',Georgia,serif;
 ```
-`body{font-variation-settings:'ROND' 100}` 固定 Doto 的圆点形态（只设 ROND、不动字重）。
+`body{font-variation-settings:'ROND' 100}` locks Doto's round-dot shape (set ROND only, leave weight alone).
 
-**Doto 字重铁律**：点阵大字用 **~400–500 字重**，相邻圆点才会**分离且圆**；用 700/900 会把圆点糊成一团、在曲线顶端挤出尖角（"0" 变尖头）。要"很多小圆点"的点阵感就**别加粗**。
+**Doto weight rule**: large dot-matrix type uses **~400–500 weight** so adjacent dots stay **separate and round**; 700/900 smears the dots together and pinches sharp corners at curve tops (the "0" gets a pointed head). For the "many small round dots" feel, **don't bold it**.
 
-**字号阶梯**（官网值，标题行高 1.2 / 正文 1.5，原则上单一字重）：
-`display 40 · heading-xl 32 · heading-lg 24 · heading-md 20 · body 16 · small 14 · caption/label 11`。
-（仪表盘英雄数字可超 40 以制造戏剧层级；标签恒为 Geist Mono、大写、字距 .08–.1em。）
-
----
-
-## 4 · 点阵语言 / Dot-Matrix Language
-
-点阵是本系统的母语，三处统一使用同一种"圆点"质感：
-
-- **数字**：**凡独立出现的数字都用像素 Doto**——日历日期、分页页码、步进序号、计数、百分比、表盘读数等。其**符号**（尤其 `%`）随数字一起用 Doto（如 `78%` `73%` 整体点阵），不要数字点阵、`%` 却用 mono。字母单位（GB / K / MB）保持小号 sans。数据表格 / 极小内联计数可例外用 mono。
-- **图标**：展示用图标做成 **9×9 真·点阵 bitmap**——每个图标在 9×9 网格上手绘，每个填充格 = 一个**完整圆点**（CSS grid + `border-radius:50%`）。**不要用 mask 裁切**：那会把圆点切成半圆。**比例可缩放**：尺寸由 `--gs` 变量驱动（默认 30px），gap 按 `--gs/20` 比例缩放，设 `style="--gs:48px"` 即整体放大且圆点间距不失真。按钮 / 输入 / 导航里的**功能性小图标**仍可用 1.5px 线性 SVG 以保清晰。
-- **Glyph Matrix 正典网格（25×25 圆形掩膜）**：对齐 Nothing Phone (3) 的真实规格——**25×25 可寻址网格、圆形掩膜（边角无 LED）、白色圆点单元、暗 LED 作底纹**（官方硬件 0–255 灰阶，本系统简化为 暗底纹/亮点/红信号 三档）。需要高保真"设备级"点阵（hero glyph、Glyph Toy 风格）时用 25×25；页内状态小图标用 9×9 即可。25×25 字形以几何函数生成（圆环、心形、三角、等高条…）而非手绘，保证圆点干净。**信号字形（如录制/live）用标志红，其余白色。**
-- **标点**：`:` `.` `…` 等用与数字同源的**圆点单元**渲染（`.colon` 竖两点 / `.pdot` 单点 / `.ellip` 横三点），直径用变量 `--pxd` 控制，比相邻数字的点**略小**。不要用字体符号或方块。
+**Type scale** (site values, heading line-height 1.2 / body 1.5, single weight in principle):
+`display 40 · heading-xl 32 · heading-lg 24 · heading-md 20 · body 16 · small 14 · caption/label 11`.
+(Dashboard hero numerals may exceed 40 for dramatic hierarchy; labels are always Geist Mono, uppercase, tracking .08–.1em.)
 
 ---
 
-## 5 · 背景系统 / Background（波点底）
+## 4 · Dot-Matrix Language
 
-Nothing 的标志性背景：一层**极稀疏的圆点网格**。它的层级模型是关键：
+The dot matrix is the system's native tongue; three places share one round-dot texture:
 
-> **自下而上三层：背景 `Background` → 波点 `Dots` → 卡片 `Card`。**
-
-- **局部反差取色（核心）**：波点不是"按主题切一个固定点色"，而是取**其当前所在表面**的反色——压在深色物体上偏亮、压在浅色物体上偏暗；**同一片波点横跨明暗，会各自反相**。
-- **实现 = `mix-blend-mode:difference`**：波点层用半透明白点（`rgba(255,255,255,~.42)`）+ `mix-blend-mode:difference`，即自动对身后表面取反差，**明暗两模式无需各设点色**。
-  - 关键层级：把波点层放在**卡片之下**（`z-index:-1`，或 region 内 `::before` + `z-index:-1`）。这样 difference 只对身后的**背景/区块表面**取反差，而**卡片始终在上、盖住波点**——这与"不要用 mix-blend 把点叠到前景内容上"的旧戒律不矛盾：差值混合作用于背景层，不作用于前景卡片。
-- **波点只是背景**：卡片浮于波点之上并**遮蔽**它，卡面不显波点；波点只在卡片**之间的留白与边缘**可见。
-- **细且非常稀疏**：圆点 ~1.3px、间距 **~120px**，细看才见、绝不抢戏。
-- **连续对齐**：整层锚定视口（`background-attachment:fixed`），跨模块对齐成一张网。
-- **分区域**：不同背景区块（如恒暗的 dashboard `.appwrap`）各自挂一层同样的 difference 波点 `::before`（`position:absolute;inset:0;z-index:-1`），在该区块内自动取反差。
-- **卡片为磨砂玻璃**：`--glass` + `backdrop-filter:blur`，**无边框**，靠玻璃填充与间隙区分。
-
-> 规范文档里应**专门留一节**讲背景：给出**局部反差示意图**（同一片波点横跨深/浅两块各自反相 + 卡片遮蔽）+ 文字说明。
+- **Numbers**: **every standalone number uses dot-display Doto** — calendar dates, page numbers, stepper indices, counts, percentages, gauge readings. Its **symbol** (especially `%`) goes with the number in Doto (e.g. `78%` `73%` as one dot-matrix unit) — don't dot-matrix the digits but render `%` in mono. Letter units (GB / K / MB) stay small sans. Data tables / very small inline counts may use mono as an exception.
+- **Icons**: showcase icons are **true 9×9 dot-matrix bitmaps** — each icon hand-drawn on a 9×9 grid, each filled cell a **complete round dot** (CSS grid + `border-radius:50%`). **Don't clip with `mask`**: that cuts dots into half-circles. **Scalable**: size is driven by the `--gs` variable (default 30px), with gap scaling as `--gs/20`, so `style="--gs:48px"` enlarges the whole icon without distorting the dot spacing. **Functional small icons** inside buttons / inputs / nav may still be 1.5px line SVGs for legibility.
+- **Glyph Matrix — the canonical grid (25×25, circular mask)**: matches the real Nothing Phone (3) spec — a **25×25 addressable grid, circularly masked (no LEDs in the corners), white round-dot units, dim LEDs as base texture** (the hardware uses 0–255 grayscale; this system simplifies to three levels: dim texture / lit dot / red signal). Use 25×25 when you need device-grade, high-fidelity dot art (hero glyphs, Glyph-Toy style); use 9×9 for in-page status icons. The 25×25 glyphs are generated from geometric functions (rings, hearts, triangles, equalizer bars, …) rather than hand-drawn, keeping the dots clean. **Signal glyphs (e.g. recording / live) use signal-red; the rest are white.**
+- **Punctuation**: `:` `.` `…` etc. render from the same **round-dot unit** as the numbers (`.colon` two vertical dots / `.pdot` single dot / `.ellip` three horizontal dots), diameter controlled by `--pxd`, **slightly smaller** than the adjacent digit dots. Don't use font glyphs or squares.
 
 ---
 
-## 6 · 间距 · 圆角 · 高度 · 动效
+## 5 · Background (the dot field)
 
-**间距**（4px 基准，只用这些档）：`0 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 64 · 80 · 96 · 128`。
-关系语义：4–8 紧贴 / 16 同组 / 32–48 新组 / 64–128 新语境。**需要分割线时，往往是间距不够。**
+Nothing's signature background: a layer of **very sparse round dots**. Its layer model is the key:
 
-**圆角**：控件/按钮 **6px**、卡片 **8px**、开关轨 / chip / 头像为 pill。无大胶囊化、无 >8px 卡片角。
+> **Three layers, bottom to top: `Background` → `Dots` → `Card`.**
 
-**高度 / 层级**：无阴影；仅 z-index（base 10 / overlay 30 / modal 40 / header 50）。
+- **Local-inverse coloring (core)**: the dots are not "one fixed dot color per theme" — they take the inverse of **whatever surface they currently sit on**: lighter over a dark object, darker over a light object; **one continuous field crossing light and dark inverts on each.**
+- **Implementation = `mix-blend-mode:difference`**: the dot layer is semi-transparent white dots (`rgba(255,255,255,~.42)`) with `mix-blend-mode:difference`, which automatically inverts against the surface behind it — **no per-theme dot color needed.**
+  - The crucial layering: put the dot layer **beneath the cards** (`z-index:-1`, or a region's `::before` + `z-index:-1`). Difference then inverts only against the **background / region surfaces** behind it, while **cards always sit on top and cover the dots** — which doesn't contradict the old rule "don't blend dots onto foreground content": the difference blend acts on the background layer, not on the foreground cards.
+- **Dots are background only**: cards float above and **cover** them; card faces show no dots; dots are visible only in the **gaps and edges between cards.**
+- **Fine and very sparse**: dots ~1.3px, spacing **~120px**; visible on inspection, never competing.
+- **Continuous alignment**: the whole layer is anchored to the viewport (`background-attachment:fixed`), aligning into one grid across modules.
+- **Per region**: distinct background regions (such as the always-dark dashboard `.appwrap`) each carry their own difference dot `::before` (`position:absolute;inset:0;z-index:-1`), inverting automatically within that region.
+- **Cards are frosted glass**: `--glass` + `backdrop-filter:blur`, **borderless**, separated by glass fill and gaps.
 
-**动效**：微交互 `200ms` / 转场 `400ms`，`ease-in-out`，**无弹簧回弹**。悬停降 opacity（.8 / .75）、卡片 `translateY(-2px)`。优先 opacity 过渡，少用位移。
-
----
-
-## 7 · 组件 / Components
-
-**统一状态机**（全系统共用，禁止新造名）：`idle`（灰静点）· `running`（白脉冲点）· `needs-input`（绿点，信号）· `done`（灰实点）· `error`（绿/红描边）。状态优先靠**形状 + 标签**表达，颜色其次。
-
-- **按钮 Button**：6px 圆角（非胶囊）。Primary = `display` 填充 + `bg` 字（黑白反色，**非绿**）；Outline = `line-2` 描边；Text/Ghost = 纯文字。文案用 Geist Mono 大写、字距 .04–.06em；悬停降 opacity；CTA 右侧可放圆形箭头。
-- **输入 Input**：下划线或 6px 描边；标签在上方（Geist Mono 大写、secondary）；聚焦 = `focus` 蓝环 + 边框透明；错误 = `error` 边框 + 下方红字；输入值用 Geist Mono。
-- **Chips / Tags**：描边无填充、pill（tag 可 4px 技术角）；激活态 = **反色填充**（白底深字），不用绿。
-- **开关 Switch**：pill 轨 + 圆钮；ON = `display` 白轨 + `bg` 黑钮（开关不是强调时刻，**不上绿**）。
-- **滑块 Slider**：细轨 + 圆钮；填充与钮用 `display`（白），不用强调色。
-- **分段进度条 Segmented Bar**（招牌）：离散方块 + 2px 间隙、方头无圆角；常态填充 `display`，**超限**用 `accent`（信号），空槽 `line`；永远配数字读数。
-- **仪表盘 Gauge**：细描边圆 + 刻度环（tick）+ **居中** Doto 数字，`%` 紧跟其后（不换行）。常态弧用 `display`；仅当表达告警时用 accent。
-- **卡片 Card**：磨砂玻璃、8px 圆角、24px 内边距、**无边框无阴影**，悬停 `translateY(-2px)`。标题用 Geist SemiBold（`--f-head` + 600）。
-- **数据表 Table**：Geist Mono；数字右对齐、文字左对齐；**无斑马纹**；活动行 `raised` 底 + 左侧 2px accent 指示条。
-- **导航 / Tabs / 分页**：标签 Geist Mono 大写；当前态 = `display`（白）下划线 / 反色，不用强调色。
-- **日历 Calendar**：日期为 Doto 点阵数字；今日 = 反色填充；选中 = `display` 描边。
-- **步进器 Stepper**：序号 Doto；当前步 = 反色填充。
-- **Alerts / 状态**：success / warning / error 用各自语义色（图标 + 左 3px 边 + 极淡底 tint）；标题用 `display`，描述用 secondary。**不要 toast**，用内联状态 `[SAVED]` / `[ERROR: …]`。
-- **内容卡片（画廊型）**：头部 `mono 标签 + [计数] + ♡` → 预览缩略 → 脚部 `头像 + 用户名`；区块由 `Primary CTA + See all` 按钮对引导。
-- **产品 UI / 仪表盘恒为深色**：像 Nothing 官方 console，不随页面明暗切换；这样其内强调红统一为 `#D71921`（含计时器冒号信号），不出现"前景红 vs 填充红"的明暗不统一。
-- **图标默认色** = `primary`（暗≈白 / 亮≈黑），hover 才转 `accent-text`；不要默认灰。
+> The spec doc should keep a **dedicated section** for the background: a **local-inverse diagram** (one dot field crossing a dark and a light block, inverting on each + a card covering the dots) plus prose.
 
 ---
 
-## 8 · 反模式 / Don'ts（绝不）
+## 6 · Spacing · Radius · Elevation · Motion
 
-**在功能 UI 中使用衬线、或滥用编辑性斜体** · 渐变 · 阴影 / 模糊投影 · 骨架屏（用 `[LOADING…]` 或分段 spinner）· toast 弹窗（用内联状态）· 吉祥物 / 哭脸插画 / 多段空状态文案 · 表格斑马纹 · 填充图标 / 多色图标 / emoji 当 UI · 视差 / 滚动劫持 · 弹簧回弹缓动 · 多种字重堆层级 · 把强调色当装饰、或用强调色铺满控件 · 把波点叠到前景内容上 · 卡片描边 + 圆角 >8px · 在浅底上用高明度色作文字/边框。
+**Spacing** (4px base, use only these steps): `0 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 64 · 80 · 96 · 128`.
+Relationship semantics: 4–8 touching / 16 same group / 32–48 new group / 64–128 new context. **When you reach for a divider, you usually just need more space.**
+
+**Radius**: controls/buttons **6px**, cards **8px**, switch tracks / chips / avatars are pill. No big capsules, no card corners > 8px.
+
+**Elevation / layering**: no shadows; z-index only (base 10 / overlay 30 / modal 40 / header 50).
+
+**Motion**: micro-interactions `200ms` / transitions `400ms`, `ease-in-out`, **no spring rebound**. Hover drops opacity (.8 / .75), cards `translateY(-2px)`. Prefer opacity transitions; use displacement sparingly.
 
 ---
 
-## 9 · 平台映射 / Platform
+## 7 · Components
 
-- **Web**：本地 `@font-face` + CSS 变量；type 用 `rem`、间距/边框用 `px`；`prefers-color-scheme` 或 class 切换明暗。
-- **原生桌面（SwiftUI）**：bundle 字体；`Color` 扩展按 token；`@Environment(\.colorScheme)` 切模式。
-- **Markdown 产物**：无 CSS——克制标题层级、用表格 + 水平线分隔、emoji 极度克制、等宽呈现数据。
+**Unified state machine** (shared system-wide, don't invent new names): `idle` (grey static dot) · `running` (white pulsing dot) · `needs-input` (signal dot) · `done` (grey solid dot) · `error` (outlined). State is expressed by **shape + label** first, color second.
+
+- **Button**: 6px radius (not a capsule). Primary = `display` fill + `bg` text (black/white inversion, **not red**); Outline = `line-2` border; Text/Ghost = text only. Labels in Geist Mono uppercase, tracking .04–.06em; hover drops opacity; a CTA may carry a round arrow on the right.
+- **Input**: underline or 6px border; label above (Geist Mono uppercase, secondary); focus = `focus` blue ring + transparent border; error = `error` border + red text below; the value is Geist Mono.
+- **Chips / Tags**: outlined, no fill, pill (a tag may use a 4px technical corner); active = **inversion fill** (white fill, dark text), not red.
+- **Switch**: pill track + round knob; ON = `display` white track + `bg` black knob (a switch isn't an accent moment, **no red**).
+- **Slider**: thin track + round knob; fill and knob use `display` (white), not the accent.
+- **Segmented Bar** (signature): discrete squares + 2px gaps, square ends, no radius; normal fill `display`, **over-limit** uses `accent` (signal), empty slots `line`; always paired with a numeric readout.
+- **Gauge**: thin ring + tick ring + **centered** Doto number, `%` right after it (no wrap). Normal arc uses `display`; use the accent only to express an alert.
+- **Card**: frosted glass, 8px radius, 24px padding, **borderless and shadowless**, hover `translateY(-2px)`. Title in Geist SemiBold (`--f-head` + 600).
+- **Table**: Geist Mono; numbers right-aligned, text left-aligned; **no zebra striping**; active row gets a `raised` background + a 2px accent indicator bar on the left.
+- **Navigation / Tabs / Pagination**: labels in Geist Mono uppercase; current state = `display` (white) underline / inversion, not the accent.
+- **Calendar**: dates are Doto dot-matrix numbers; today = inversion fill; selected = `display` outline.
+- **Stepper**: indices in Doto; current step = inversion fill.
+- **Alerts / status**: success / warning / error use their semantic color (icon + 3px left border + a very faint tint); title in `display`, description in secondary. **No toasts** — use inline status like `[SAVED]` / `[ERROR: …]`.
+- **Content cards (gallery type)**: header `mono label + [count] + ♡` → preview thumbnail → footer `avatar + username`; sections led by a `Primary CTA + See all` button pair.
+- **Product UI / dashboards stay dark**: like Nothing's own console, they don't follow the page light/dark toggle; this keeps their accent red uniformly `#D71921` (including the timer-colon signal), avoiding a "foreground red vs fill red" mismatch.
+- **Default icon color** = `primary` (≈ white on dark / ≈ black on light), turning `accent-text` only on hover; don't default to grey.
 
 ---
 
-## 10 · 应用 Checklist（产出前后逐条自检）
+## 8 · Don'ts (never)
 
-- [ ] 颜色 / 间距 / 字号 / 圆角 / 缓动全部取自 token，无裸值
-- [ ] 黑灰白为主；强调色一屏屈指可数，只在"信号"处
-- [ ] 控件激活态用黑白反色，不用强调色（开关 ON = 白轨）
-- [ ] 结构用 hairline + 留白，零阴影 / 零渐变
-- [ ] 独立数字 + 其 `%` 用 Doto；标题与正文用 Geist、标签数据用 Geist Mono；Newsreader Italic 仅用于一句式品牌文案或引语
-- [ ] Doto 字重 ≤500、`ROND=100`（圆点分离且圆，"0" 不尖头）
-- [ ] 图标为 9×9 完整圆点（非 mask 裁切）、比例可缩放（`--gs`）；标点为圆点单元
-- [ ] 背景波点：稀疏 ~120px、**局部反差取色**（`mix-blend-mode:difference`、`z-index:-1` 在卡片之下）、卡片遮蔽（不叠前景）
-- [ ] 卡片为磨砂玻璃、无边框
-- [ ] 状态命名都在统一状态机内
-- [ ] 界面默认安静，只在该吸引注意时才吸引
+**A serif in functional UI, or overusing the editorial italic** · gradients · shadows / blur shadows · skeleton screens (use `[LOADING…]` or a segmented spinner) · toast popups (use inline status) · mascots / sad-face illustrations / multi-line empty-state copy · zebra-striped tables · filled icons / multicolor icons / emoji-as-UI · parallax / scroll-jacking · spring-rebound easing · stacking hierarchy with many weights · using the accent as decoration or filling controls with it · blending dots onto foreground content · card borders + radius > 8px · high-chroma color as text/border on a light background.
+
+---
+
+## 9 · Platform mapping
+
+- **Web**: local `@font-face` + CSS variables; type in `rem`, spacing/borders in `px`; light/dark via `prefers-color-scheme` or a class.
+- **Native desktop (SwiftUI)**: bundle the fonts; a `Color` extension keyed by token; switch mode with `@Environment(\.colorScheme)`.
+- **Markdown output**: no CSS — restrained heading levels, tables + horizontal rules for separation, extremely sparing emoji, monospace for data.
+
+---
+
+## 10 · Application Checklist (self-check before and after producing)
+
+- [ ] Color / spacing / type size / radius / easing all come from tokens, no raw values
+- [ ] Black/grey/white dominate; accent elements countable on one hand, only on "signals"
+- [ ] Active controls use black/white inversion, not the accent (switch ON = white track)
+- [ ] Structure from hairlines + whitespace, zero shadows / zero gradients
+- [ ] Standalone numbers and their `%` in Doto; headings and body in Geist, labels/data in Geist Mono; Newsreader Italic only for a one-line brand phrase or quote
+- [ ] Doto weight ≤ 500, `ROND=100` (dots separate and round, the "0" has no pointed head)
+- [ ] Icons are 9×9 complete dots (not mask-clipped), scalable via `--gs`; punctuation uses round-dot units
+- [ ] Background dots: sparse ~120px, **local-inverse coloring** (`mix-blend-mode:difference`, `z-index:-1` beneath cards), covered by cards (not over foreground)
+- [ ] Cards are frosted glass, borderless
+- [ ] State names all live within the unified state machine
+- [ ] The interface is quiet by default, drawing attention only when it should
