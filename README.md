@@ -22,17 +22,10 @@ Monochrome surfaces · round-dot type & icons · a single signal-red accent · a
 
 *Drag the divider — same content, default AI styling on the left, this system on the right.*
 
-<!-- ▼▼▼ GIF #1 — PASTE YOUR RECORDING HERE ▼▼▼
-     
-
- ▲▲▲ -->
 <img src="docs/demo-compare.gif" alt="Dragging between a generic AI dashboard and the Vibe-Nothing-UI version" width="900">
 
 ### Dark ⟷ Light — one attribute
 
-<!-- ▼▼▼ GIF #2 — PASTE YOUR RECORDING HERE ▼▼▼
-     <img width="1904" height="1080" alt="result" src="https://github.com/user-attachments/assets/3b1ae724-8ffc-46e5-ae9d-a0f8b3d39421" />
- ▲▲▲ -->
 <img src="docs/demo-theme.gif" alt="Dragging between dark and light themes of the same console" width="900">
 
 </div>
