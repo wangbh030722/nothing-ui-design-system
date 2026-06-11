@@ -4,13 +4,13 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-white.svg)](LICENSE)
 [![Zero dependencies](https://img.shields.io/badge/dependencies-0-D71921.svg)](#quick-start)
-[![Live demo](https://img.shields.io/badge/demo-GitHub%20Pages-black.svg)](https://wangbh030722.github.io/nothing-ui-design-system/)
+[![Live demo](https://img.shields.io/badge/demo-GitHub%20Pages-black.svg)](https://wangbh030722.github.io/vibe-nothing-ui-design/)
 
 **A Nothing-inspired UI design system for the web.**
 
 Monochrome surfaces · round-dot type & icons · a single signal-red accent · a sparse dot field that inverts against whatever sits behind it. Zero dependencies — pure HTML, CSS custom properties, and a little vanilla JavaScript. No framework, no build step.
 
-**[Live demo](https://wangbh030722.github.io/nothing-ui-design-system/demo.html)** · **[All components](https://wangbh030722.github.io/nothing-ui-design-system/)** · **[SPEC.md](SPEC.md)** · **[DESIGN.md](DESIGN.md)**
+**[Live demo](https://wangbh030722.github.io/vibe-nothing-ui-design/demo.html)** · **[All components](https://wangbh030722.github.io/vibe-nothing-ui-design/)** · **[SPEC.md](SPEC.md)** · **[DESIGN.md](DESIGN.md)**
 
 </div>
 
@@ -22,10 +22,20 @@ Monochrome surfaces · round-dot type & icons · a single signal-red accent · a
 
 *Drag the divider — same content, default AI styling on the left, this system on the right.*
 
+<!-- ▼▼▼ GIF #1 — PASTE YOUR RECORDING HERE ▼▼▼
+     Save your file at EXACTLY:  docs/demo-compare.gif
+     Record demo.html Stage 1 (the AI-vs-Vibe-Nothing-UI split): let it auto-sweep once,
+     then drag the divider left↔right a couple of times. ~1000–1200px wide, 5–8s loop, ≤8MB.
+     Once the file exists this image renders automatically — nothing else to edit.
+     See docs/_HOW-TO-ADD-GIFS.md for full steps; delete that file when done. ▲▲▲ -->
 <img src="docs/demo-compare.gif" alt="Dragging between a generic AI dashboard and the Vibe-Nothing-UI version" width="900">
 
 ### Dark ⟷ Light — one attribute
 
+<!-- ▼▼▼ GIF #2 — PASTE YOUR RECORDING HERE ▼▼▼
+     Save your file at EXACTLY:  docs/demo-theme.gif
+     Record demo.html Stage 2 (dark↔light): drag the divider across, with the dashboard motion running.
+     ~1000–1200px wide, 5–8s loop, ≤8MB. ▲▲▲ -->
 <img src="docs/demo-theme.gif" alt="Dragging between dark and light themes of the same console" width="900">
 
 </div>
