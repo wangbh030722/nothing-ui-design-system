@@ -14,6 +14,6 @@ All notable changes to this project will be documented here.
 - Added dark and light themes.
 - Added scalable 9x9 dot icons and a 25x25 circular Glyph Matrix.
 - Added the Agent Console applied dashboard.
-- Added the interactive generic-AI versus nothing-ui comparison.
+- Added the interactive generic-AI versus Vibe-Nothing-UI-Design comparison.
 - Added `SPEC.md` as the normative AI generation contract.
 - Added `DESIGN.md` as the design rationale and decision record.

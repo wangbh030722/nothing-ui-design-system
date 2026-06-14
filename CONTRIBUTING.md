@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve nothing-ui.
+Thanks for helping improve Vibe-Nothing-UI-Design.
 
 ## Development
 

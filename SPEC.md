@@ -1,7 +1,7 @@
-# nothing-ui · Generation Spec (Normative)
+# Vibe-Nothing-UI-Design · Generation Spec (Normative)
 
 **Audience:** humans and AI assistants generating UI with this library.
-**Goal:** anything you build with nothing-ui must be **visually indistinguishable** from `index.html`. This document is the contract that makes that happen. When in doubt, open `index.html`, find the closest component, and copy its markup verbatim.
+**Goal:** anything you build with Vibe-Nothing-UI-Design must be **visually indistinguishable** from `index.html`. This document is the contract that makes that happen. When in doubt, open `index.html`, find the closest component, and copy its markup verbatim.
 
 The keywords **MUST**, **MUST NOT**, **NEVER**, **ALWAYS** are normative. Violating any rule in §1 means the output is wrong, even if it "looks nice".
 
